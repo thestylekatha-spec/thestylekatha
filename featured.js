@@ -5,7 +5,7 @@
    effect and card styling stay exactly the same.
 
    Include AFTER collections.js:  <script src="featured.js"></script>
-*/
+ */
 (function () {
   var MOUNT_ID = "featuredCategories";
   var MAX_PER_ROW = 10;
@@ -21,12 +21,12 @@
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      return { "&": "&", "<": "<", ">": ">", '"': """, "'": "'" }[c];
     });
   }
 
   function money(n) {
-    return "Rs. " + Number(n || 0).toLocaleString("en-IN", {
+    return "₹" + Number(n || 0).toLocaleString("en-IN", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     });
@@ -146,10 +146,9 @@
     return list.filter(function (p) { return p && p.image_url; });
   }
 
-  async function init() {
-    var mount = document.getElementById(MOUNT_ID);
-    if (!mount) return;
+  var cachedData = null;
 
+  async function loadAndCacheData() {
     var cats = [];
     try {
       cats = await loadCategories();
@@ -157,7 +156,7 @@
       console.warn("Featured rows: could not load categories.", e);
     }
 
-    var html = "";
+    var rows = [];
     for (var i = 0; i < ROWS.length; i++) {
       var cat = pickCategory(cats, ROWS[i]);
       var products = [];
@@ -166,18 +165,77 @@
       } catch (e) {
         console.warn("Featured rows: could not load products.", e);
       }
-      html += sectionHTML(ROWS[i], cat, products, i === 0);
+      rows.push({ row: ROWS[i], cat: cat, products: products });
     }
+    cachedData = rows;
+    return rows;
+  }
 
+  function renderRows(mount, rows) {
+    var html = "";
+    for (var i = 0; i < rows.length; i++) {
+      html += sectionHTML(rows[i].row, rows[i].cat, rows[i].products, i === 0);
+    }
     mount.className = "ak";
     mount.innerHTML = html;
     enhanceMarquees(mount);
+    if (typeof window.initReveal === "function") window.initReveal();
+  }
+
+  async function init() {
+    var mount = document.getElementById(MOUNT_ID);
+    if (!mount) return;
+
+    var rows = await loadAndCacheData();
+    renderRows(mount, rows);
 
     var tries = 0;
     (function reveal() {
       if (typeof window.initReveal === "function") { window.initReveal(); return; }
       if (tries++ < 20) setTimeout(reveal, 200);
     })();
+  }
+
+  /* Touch friendliness: pause while the finger is down, resume after, and
+     re-render on orientation change so the track still covers the screen. */
+  function enhanceMarquees(mount) {
+    var wraps = mount.querySelectorAll(".marquee-wrap");
+    Array.prototype.forEach.call(wraps, function (w) {
+      var resume;
+      w.addEventListener("touchstart", function () {
+        clearTimeout(resume);
+        w.classList.add("is-paused");
+      }, { passive: true });
+      var release = function () {
+        clearTimeout(resume);
+        resume = setTimeout(function () { w.classList.remove("is-paused"); }, 1200);
+      };
+      w.addEventListener("touchend", release, { passive: true });
+      w.addEventListener("touchcancel", release, { passive: true });
+    });
+
+    if (enhanceMarquees._bound) return;
+    enhanceMarquees._bound = true;
+    var lastW = window.innerWidth;
+    var t;
+    window.addEventListener("resize", function () {
+      if (Math.abs(window.innerWidth - lastW) < 120) return;
+      lastW = window.innerWidth;
+      clearTimeout(t);
+      t = setTimeout(function(){
+        var mount = document.getElementById(MOUNT_ID);
+        if (mount && cachedData) renderRows(mount, cachedData);
+      }, 300);
+    });
+  }
+
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
   }
 
   /* Touch friendliness: pause while the finger is down, resume after, and

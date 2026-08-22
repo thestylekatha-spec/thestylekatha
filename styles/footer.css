@@ -10,7 +10,7 @@ footer {
   contain: layout;
 }
 
-.foot-grid {
+.foot-grid, .footer-grid {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -23,9 +23,9 @@ footer {
 
 .foot-col { min-width: 160px; }
 
-.foot-grid .logo { margin-bottom: 16px; justify-content: center; }
+.foot-grid .logo, .footer-grid .logo { margin-bottom: 16px; justify-content: center; }
 
-.foot-grid p {
+.foot-grid p, .footer-grid p {
   font-size: 13px;
   line-height: 1.7;
   max-width: 280px;
@@ -50,7 +50,7 @@ footer {
 
 .foot-col a:hover { opacity: 1; color: var(--gold-soft); }
 
-.foot-bottom {
+.foot-bottom, .footer-bottom {
   max-width: 1200px;
   margin: 0 auto;
   border-top: 1px solid rgba(245,239,226,0.1);

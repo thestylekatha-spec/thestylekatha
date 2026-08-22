@@ -2,12 +2,17 @@
    Responsive Breakpoints
    ======================================== */
 
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
 /* Tablet */
 @media (max-width: 900px) {
   nav { padding: 14px 20px; }
   .usp-grid { grid-template-columns: 1fr; gap: 36px; }
   .grid { grid-template-columns: repeat(2, 1fr); }
   .foot-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
   .hero h1 { font-size: 48px; }
   .stage { width: 280px; height: 220px; }
   .ring-wrap { width: 180px; height: 180px; }
@@ -19,6 +24,12 @@
 }
 
 /* Mobile */
+@media (max-width: 560px) {
+  .ak .insta-grid { grid-template-columns: repeat(2, 1fr); }
+  .ak .testimonial-grid { grid-template-columns: 1fr; }
+  .ak .footer-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 520px) {
   nav { padding: 12px 14px; gap: 10px; }
   .logo-mark { height: 45px; }
@@ -26,6 +37,7 @@
   .logo-brand { font-size: 16px; }
   .grid { grid-template-columns: 1fr; }
   .foot-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
   .hero-ctas { flex-direction: column; }
   .nav-icons { gap: 10px; }
   .nav-contact-btn span { display: none; }
@@ -56,6 +68,7 @@
   .band h2 { font-size: 28px; }
   footer { padding: 40px 16px 20px; }
   .foot-bottom { flex-direction: column; text-align: center; gap: 8px; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
   .cart-modal-body { max-height: 96vh; border-radius: 12px; }
   .cart-items { max-height: 30vh; padding: 6px 18px; }
   .cart-head { padding: 16px 18px 14px; }
@@ -85,6 +98,8 @@
   .sg-table { font-size: 12px; }
   .sg-table th, .sg-table td { padding: 6px 8px; }
   .qv-content { width: 95vw; max-height: 90vh; }
+  .cart-form .field-row { flex-wrap: wrap; }
+  .cart-form .field-row .field { flex: 1; min-width: 120px; }
 }
 
 /* Small mobile */

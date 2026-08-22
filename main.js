@@ -341,31 +341,57 @@
     async function loadAndRenderProducts(){
       var grid = document.getElementById('productGrid');
       if (!grid) return; // collection grid removed from this page
-      if (!supabase) throw new Error('Supabase not initialized');
-      var result = await supabase.from('products').select('*').order('created_at', { ascending: true });
-      if (result.error) throw result.error;
-      var products = (result.data || []).map(normalizeProduct);
-      grid.innerHTML = products.map(productCardHTML).join('');
-      filterProducts();
+      if (!supabase) {
+        grid.innerHTML = '<div class="no-results">Store is not connected.</div>';
+        return;
+      }
+      grid.innerHTML = '<div class="grid-loading">Loading collection…</div>';
+      try {
+        var result = await supabase.from('products').select('*').order('created_at', { ascending: true });
+        if (result.error) throw result.error;
+        var products = (result.data || []).map(normalizeProduct);
+        grid.innerHTML = products.map(productCardHTML).join('');
+        if (!products.length) {
+          grid.innerHTML = '<div class="no-results">No products yet.</div>';
+        }
+        filterProducts();
+      } catch (e) {
+        grid.innerHTML = '<div class="no-results">Could not load products.</div>';
+        console.error('loadAndRenderProducts error:', e);
+      }
     }
 
     (function(){
       var imgs = document.querySelectorAll('#ringWrap .ring-photo');
       var dots = document.querySelectorAll('#ringDots span');
       var current = 0;
+      var interval = null;
       function show(i){
         imgs.forEach(function(img, idx){ img.classList.toggle('active', idx === i); });
         dots.forEach(function(d, idx){ d.classList.toggle('active', idx === i); });
         current = i;
       }
+      function startAuto(){
+        stopAuto();
+        interval = setInterval(function(){
+          show((current + 1) % imgs.length);
+        }, 3000);
+      }
+      function stopAuto(){
+        if (interval) { clearInterval(interval); interval = null; }
+      }
       dots.forEach(function(d){
         d.addEventListener('click', function(){
           show(parseInt(d.getAttribute('data-i'), 10));
+          startAuto();
         });
       });
-      setInterval(function(){
-        show((current + 1) % imgs.length);
-      }, 2000);
+      var wrap = document.getElementById('ringWrap');
+      if (wrap) {
+        wrap.addEventListener('mouseenter', stopAuto);
+        wrap.addEventListener('mouseleave', startAuto);
+      }
+      startAuto();
     })();
 
     function initShopUI(){
@@ -402,6 +428,7 @@
       document.getElementById('searchClose').addEventListener('click', closeAll);
 
       function runSearch(){
+        if (!searchInput) return;
         var q = searchInput.value.trim().toLowerCase();
         var visibleCount = 0;
         cards.forEach(function(card){
@@ -425,13 +452,15 @@
           searchStatus.textContent = visibleCount + (visibleCount === 1 ? ' piece found' : ' pieces found');
         }
       }
-      searchInput.addEventListener('input', runSearch);
-      searchInput.addEventListener('keydown', function(e){
-        if (e.key === 'Enter') {
-          document.getElementById('collection').scrollIntoView({ behavior: 'smooth' });
-          closeAll();
-        }
-      });
+      if (searchInput) {
+        searchInput.addEventListener('input', runSearch);
+        searchInput.addEventListener('keydown', function(e){
+          if (e.key === 'Enter') {
+            document.getElementById('collections').scrollIntoView({ behavior: 'smooth' });
+            closeAll();
+          }
+        });
+      }
 
       // ---- Contact dropdown ----
       var contactBtn = document.getElementById('contactBtn');
@@ -476,9 +505,19 @@
       var cartCountEl = document.getElementById('cartCount');
       var cartItemsEl = document.getElementById('cartItems');
       var cartTotalEl = document.getElementById('cartTotal');
-      var cart = []; // {name, cat, price}
+      var cart = [];
+
+      // Load cart from localStorage
+      try {
+        var saved = localStorage.getItem('sk_cart');
+        if (saved) cart = JSON.parse(saved);
+      } catch (e) {}
 
       function fmt(n){ return '₹' + n.toLocaleString('en-IN'); }
+
+      function saveCart(){
+        try { localStorage.setItem('sk_cart', JSON.stringify(cart)); } catch (e) {}
+      }
 
       function renderCart(){
         if (cart.length === 0) {
@@ -506,6 +545,7 @@
         cartTotalEl.textContent = fmt(total);
         var totalQty = cart.reduce(function(sum, item){ return sum + item.qty; }, 0);
         cartCountEl.textContent = totalQty;
+        saveCart();
       }
 
       // Expose cart actions for inline onclick handlers
@@ -513,6 +553,7 @@
         changeQty: function(idx, delta){
           cart[idx].qty += delta;
           if (cart[idx].qty <= 0) cart.splice(idx, 1);
+          if (cart[idx] && cart[idx].qty > 10) cart[idx].qty = 10;
           renderCart();
         },
         removeItem: function(idx){
@@ -565,6 +606,7 @@
         var total = cart.reduce(function(sum, item){ return sum + item.price * item.qty; }, 0);
         var orderId = generateOrderId();
         checkoutBtn.disabled = true;
+        checkoutBtn.textContent = 'Placing…';
         checkoutStatus.textContent = 'Placing your order…';
         checkoutStatus.classList.add('show');
         checkoutStatus.classList.remove('err');
@@ -585,18 +627,18 @@
           if (result.error) throw result.error;
 
           if (WHATSAPP_NUMBER && WHATSAPP_NUMBER !== 'YOUR_WHATSAPP_NUMBER') {
-            var itemLines = cart.map(function(i){ return '- ' + i.name + ' - ₹' + i.price; }).join('%0A');
+            var itemLines = cart.map(function(i){ return '- ' + i.name + ' - ₹' + i.price; }).join('\n');
             var msg =
-              '*New Order* (' + orderId + ')%0A%0A' +
-              itemLines + '%0A' +
-              '*Total: ₹' + total + '*%0A%0A' +
-              'Name: ' + name + '%0A' +
-              'Mobile: ' + mobile + '%0A' +
-              'Alt. Mobile: ' + (altMobile || '-') + '%0A' +
-              'Address: ' + address + '%0A' +
-              'Mandal: ' + mandal + '%0A' +
+              '*New Order* (' + orderId + ')\n\n' +
+              itemLines + '\n' +
+              '*Total: ₹' + total + '*\n\n' +
+              'Name: ' + name + '\n' +
+              'Mobile: ' + mobile + '\n' +
+              'Alt. Mobile: ' + (altMobile || '-') + '\n' +
+              'Address: ' + address + '\n' +
+              'Mandal: ' + mandal + '\n' +
               'District: ' + district;
-            window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + msg, '_blank');
+            window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
           }
 
           showOrderReceipt({
@@ -621,6 +663,7 @@
           checkoutStatus.classList.add('err');
         } finally {
           checkoutBtn.disabled = false;
+          checkoutBtn.textContent = 'Place Order';
         }
       });
 
@@ -664,7 +707,8 @@
             var badgeAlt = badge ? badge.classList.contains('alt') : false;
             var oldPriceEl = card.querySelector('.price-old');
             var oldPrice = oldPriceEl ? parseInt(oldPriceEl.textContent.replace(/[^\d]/g, ''), 10) : 0;
-            openQuickView({ id: id, name: name, cat: cat, price: price, image: image, badge: badgeText, badgeAlt: badgeAlt, oldPrice: oldPrice, description: card.getAttribute('data-desc') || DEFAULT_DESC, features: JSON.parse(card.getAttribute('data-features') || '[]').length ? JSON.parse(card.getAttribute('data-features') || '[]') : DEFAULT_FEATURES });
+            var features = JSON.parse(card.getAttribute('data-features') || '[]');
+            openQuickView({ id: id, name: name, cat: cat, price: price, image: image, badge: badgeText, badgeAlt: badgeAlt, oldPrice: oldPrice, description: card.getAttribute('data-desc') || DEFAULT_DESC, features: features.length ? features : DEFAULT_FEATURES });
             trackRecentlyViewed({ id: id, name: name, cat: cat, price: price, image: image });
           });
         }
@@ -811,6 +855,15 @@
       if (overlay) overlay.addEventListener('click', function(){ modal.classList.remove('open'); });
     })();
 
+    // ---- Recently viewed tracking ----
+    var recentlyViewed = [];
+    function trackRecentlyViewed(product){
+      recentlyViewed = recentlyViewed.filter(function(p){ return p.id !== product.id; });
+      recentlyViewed.unshift(product);
+      if (recentlyViewed.length > 8) recentlyViewed.pop();
+      try { localStorage.setItem('sk_recent', JSON.stringify(recentlyViewed)); } catch(e) {}
+    }
+
     // ---- Back to top button ----
     (function(){
       var btn = document.getElementById('backToTop');
@@ -835,7 +888,7 @@
         e.preventDefault();
         var catId = a.getAttribute('data-cat');
         setCategoryFilter(catId);
-        document.getElementById('collection').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('collections').scrollIntoView({ behavior: 'smooth' });
       });
     });
 

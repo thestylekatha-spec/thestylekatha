@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Collection — The Style Katha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Shop this collection at The Style Katha — 1gm gold look jewellery, necklaces, earrings, bracelets and more.">
+<meta name="theme-color" content="#13110d">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/nav.css">
+<link rel="stylesheet" href="styles/footer.css">
+<link rel="stylesheet" href="styles/toast.css">
+<link rel="stylesheet" href="styles/aunty.css">
+<link rel="stylesheet" href="collections.css">
+<link rel="stylesheet" href="collection.css">
+</head>
+<body class="cl-page">
+
+  <header>
+    <nav>
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="The Style Katha" class="logo-mark">
+        <div class="logo-text">
+          <span class="logo-the">THE</span>
+          <span class="logo-brand"><em>STYLE KATHA</em></span>
+          <span class="logo-sub">JEWELLERY · CLOTHING · STYLE</span>
+        </div>
+      </a>
+      <div class="nav-icons">
+        <a class="cl-nav-link" href="index.html">Home</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="cl-main">
+    <nav class="cl-crumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="cl-dot">•</span>
+      <span id="crumbName">Collection</span>
+    </nav>
+
+    <h1 class="cl-title" id="collectionTitle">COLLECTION</h1>
+    <p class="cl-desc" id="collectionDesc"></p>
+
+    <div class="cl-toolbar">
+      <div class="cl-views" role="group" aria-label="View">
+        <button class="cl-view active" id="viewGrid" aria-label="Grid view">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </button>
+        <button class="cl-view cl-view-list" id="viewList" aria-label="List view">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="cl-sort">
+        <label for="sortBy">Sort by:</label>
+        <select id="sortBy">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price, low to high</option>
+          <option value="price-desc">Price, high to low</option>
+          <option value="name-asc">Alphabetically, A–Z</option>
+          <option value="name-desc">Alphabetically, Z–A</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cl-grid" id="collectionGrid">
+      <div class="cl-loading">Loading products…</div>
+    </div>
+  </main>
+
+  <footer class="cl-footer">
+    <p>© <span id="year"></span> The Style Katha — Jewellery · Clothing · Timeless Style</p>
+    <a href="index.html">Back to home</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="collection.js"></script>
+</body>
+</html>

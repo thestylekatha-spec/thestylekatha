@@ -1,0 +1,117 @@
+/* ========================================
+   Size Guide Modal
+   ======================================== */
+
+.size-guide-link {
+  color: var(--gold);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 13px;
+}
+
+.size-guide-link:hover { color: var(--gold-soft); }
+
+.sg-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+
+.sg-modal.open { opacity: 1; pointer-events: auto; }
+
+.sg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(19,17,13,0.85);
+  backdrop-filter: blur(4px);
+}
+
+.sg-content {
+  position: relative;
+  background: var(--cream);
+  color: var(--ink);
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  animation: qvIn .3s var(--ease);
+}
+
+.sg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sg-header h2 { font-size: 22px; font-style: italic; }
+
+.sg-close {
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.5;
+  transition: opacity .2s;
+}
+
+.sg-close:hover { opacity: 1; }
+
+.sg-body { padding: 24px; overflow-y: auto; max-height: calc(85vh - 80px); }
+
+.sg-body h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+
+.sg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+
+.sg-table th {
+  background: var(--bg-dark);
+  color: var(--cream);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.sg-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sg-table tr:nth-child(even) td { background: rgba(201,163,92,0.05); }
+
+.sg-tip {
+  background: var(--cream-2);
+  border-left: 3px solid var(--gold);
+  padding: 14px 16px;
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #5c5142;
+  line-height: 1.6;
+}
+
+.sg-tip strong { color: var(--ink); }

@@ -92,7 +92,6 @@
 
     if (!cats.length) {
       fill("collectionsTrack", '<div style="padding:20px;font-size:13px;color:#7a6f65;">No collections yet. Add categories in admin.</div>');
-      fill("collectionsTrackClone", "");
       return;
     }
 
@@ -111,7 +110,6 @@
             sectionsHtml += categorySectionHTML(results[i].cat, results[i].products);
           }
           fill("collectionsTrack", sectionsHtml);
-          fill("collectionsTrackClone", sectionsHtml);
           bindAddToCartButtons();
           enhanceMarquees();
           if (typeof window.initReveal === "function") window.initReveal();

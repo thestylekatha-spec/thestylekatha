@@ -1,0 +1,176 @@
+/* ========================================
+   Product Quick View Modal
+   ======================================== */
+
+.qv-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+
+.qv-modal.open { opacity: 1; pointer-events: auto; }
+
+.qv-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(19,17,13,0.85);
+  backdrop-filter: blur(4px);
+}
+
+.qv-content {
+  position: relative;
+  background: var(--bg-dark-2);
+  color: var(--cream);
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: qvIn .3s var(--ease);
+}
+
+@keyframes qvIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.qv-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(19,17,13,0.6);
+  border: none;
+  color: var(--cream);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background .2s;
+}
+
+.qv-close:hover { background: rgba(19,17,13,0.9); }
+.qv-close svg { width: 18px; height: 18px; }
+
+.qv-image {
+  position: relative;
+  background: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+
+.qv-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform .4s var(--ease);
+}
+
+.qv-image:hover img { transform: scale(1.15); }
+
+.qv-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: #241d10;
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.qv-badge.alt { background: var(--emerald); color: var(--cream); }
+
+.qv-details { padding: 32px; display: flex; flex-direction: column; }
+
+.qv-cat {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.qv-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-style: italic;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.qv-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 20px; }
+
+.qv-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--gold-soft);
+}
+
+.qv-price-old {
+  font-size: 16px;
+  color: rgba(245,239,226,0.4);
+  text-decoration: line-through;
+}
+
+.qv-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(245,239,226,0.7);
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.qv-features {
+  list-style: none;
+  margin-bottom: 28px;
+}
+
+.qv-features li {
+  font-size: 13px;
+  color: rgba(245,239,226,0.65);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(245,239,226,0.06);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qv-features li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.qv-actions { display: flex; gap: 10px; }
+
+.qv-actions .btn { flex: 1; text-align: center; }
+
+@media (max-width: 680px) {
+  .qv-content { grid-template-columns: 1fr; max-height: 95vh; }
+  .qv-image { aspect-ratio: 4/3; }
+  .qv-details { padding: 24px; }
+}

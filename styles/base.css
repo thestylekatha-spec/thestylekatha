@@ -1,0 +1,46 @@
+/* ========================================
+   Base / Reset / Variables
+   ======================================== */
+
+:root {
+  --bg-dark: #13110d;
+  --bg-dark-2: #1c1912;
+  --cream: #f5efe2;
+  --cream-2: #ece3cf;
+  --ink: #28221a;
+  --gold: #c9a35c;
+  --gold-deep: #9c7b3c;
+  --gold-soft: #e6cd97;
+  --emerald: #2f5d4f;
+  --emerald-2: #1e3f36;
+  --line: rgba(201, 163, 92, 0.35);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .serif {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 500;
+}

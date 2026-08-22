@@ -1,0 +1,66 @@
+/* ========================================
+   Buttons
+   ======================================== */
+
+.btn {
+  display: inline-block;
+  padding: 14px 30px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease),
+              background .5s var(--ease), border-color .4s ease, color .4s ease;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left .7s var(--ease);
+}
+
+.btn:hover::before { left: 140%; }
+
+.btn-gold {
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold-deep));
+  color: #241d10;
+  border: 1px solid var(--gold);
+  font-weight: 500;
+}
+
+.btn-gold:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(201,163,92,0.32);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid rgba(245,239,226,0.4);
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold-soft);
+  transform: translateY(-3px);
+}
+
+.btn-outline-light {
+  color: var(--cream);
+  border-color: rgba(245,239,226,0.4);
+}
+
+.btn-outline-light:hover {
+  border-color: var(--gold);
+  color: var(--gold-soft);
+  transform: translateY(-3px);
+}

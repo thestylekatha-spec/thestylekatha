@@ -1,0 +1,99 @@
+/* ========================================
+   Mobile fixes + enhancements
+   Load LAST so it can override earlier files.
+   ======================================== */
+
+/* --- GPU-safe marquee (iOS Safari sometimes drops plain translateX
+       animations inside masked / overflow:hidden flex rows) --- */
+@keyframes ak-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-100%, 0, 0); }
+}
+
+.ak .cat-track,
+.ak .product-track,
+.ak .collections-track {
+  animation-name: ak-marquee;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Hover-pause is meaningless on touch: use an explicit paused class instead */
+.ak .marquee-wrap.is-paused .product-track,
+.ak .marquee-wrap.is-paused .collections-track,
+.ak .cat-strip.is-paused .cat-track {
+  animation-play-state: paused;
+}
+
+/* --- Ring float: force a compositor layer so it keeps animating on
+       low-power / mobile browsers --- */
+.ring-wrap {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+@media (max-width: 900px) {
+  .ak .marquee-wrap {
+    /* the webkit mask + animation combo is the main mobile killer */
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .ak .marquee-wrap::-webkit-scrollbar { display: none; }
+
+  .ak .product-track { animation-duration: 20s; }
+  .ak .collections-track { animation-duration: 24s; }
+  .ak .cat-track { animation-duration: 16s; }
+}
+
+@media (max-width: 640px) {
+  .ak .product-card { width: 168px; }
+  .ak .product-track { gap: 12px; padding: 0 14px; }
+  .ak .product-card .name { font-size: 13px; line-height: 1.3; }
+  .ak .product-card .price { font-size: 12.5px; }
+  .ak .product-card .thumb { border-radius: 6px; margin-bottom: 10px; }
+
+  .ak .ak-hero { padding: 26px 16px 10px; }
+  .ak .ak-hero h1 { font-size: 25px !important; letter-spacing: 1.2px; }
+  .ak .ak-hero .shop-now { font-size: 13px; padding: 6px 2px; }
+
+  .ak .product-section { padding: 10px 0 22px; }
+  .ak .collection-item { width: 116px; }
+  .ak .collections h2 { font-size: 23px; }
+  .ak .cat-item { font-size: 16px; gap: 10px; }
+  .ak .cat-item img { width: 46px; height: 46px; flex: 0 0 46px; }
+}
+
+@media (max-width: 400px) {
+  .ak .product-card { width: 150px; }
+  .ak .ak-hero h1 { font-size: 22px !important; }
+}
+
+/* --- General mobile polish --- */
+@media (max-width: 640px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { overflow-x: hidden; }
+
+  /* comfortable tap targets */
+  a, button { -webkit-tap-highlight-color: rgba(201,163,92,0.18); }
+  .btn { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; }
+  .nav-icons button, .nav-icons a { min-width: 42px; min-height: 42px; }
+
+  /* section rhythm */
+  .usp, .products, .band, .collections { padding-left: 16px; padding-right: 16px; }
+  .products-head h2, .collections-head h2 { line-height: 1.2; }
+
+  /* keep long product names from breaking the grid */
+  .card-title, .product-card .name { overflow-wrap: anywhere; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ak .cat-track,
+  .ak .product-track,
+  .ak .collections-track,
+  .ring-wrap { animation: none !important; }
+}

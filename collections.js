@@ -9,9 +9,12 @@
   var MAX_PRODUCTS_PER_CAT = 12;
 
   function esc(s) {
-    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&", "<": "<", ">": ">", '"': """, "'": "'" }[c];
-    });
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&")
+      .replace(/</g, "<")
+      .replace(/>/g, ">")
+      .replace(/"/g, """")
+      .replace(/'/g, "'");
   }
 
   function money(n) {

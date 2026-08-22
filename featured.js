@@ -1,4 +1,4 @@
-/* ===== The Style Katha — Featured category rows (admin-driven) =====
+﻿/* ===== The Style Katha — Featured category rows (admin-driven) =====
    Renders the three homepage category rows (Necklaces, Bracelets, Temple
    Jewellery) from the products you add in admin.html. Markup + classes are
    identical to the old hard-coded HTML, so the marquee animation, reveal
@@ -10,7 +10,7 @@
   var MOUNT_ID = "featuredCategories";
   var MAX_PER_ROW = 10;
 
-  /* Which rows to show, in order. `match` values are compared (lowercase,
+  /* Which rows to show, in order. match values are compared (lowercase,
      ignoring spaces/dashes) against the category slug and name coming from
      the admin panel. Edit this list to change the homepage rows. */
   var ROWS = [
@@ -19,10 +19,13 @@
     { title: "TEMPLE JEWELLERY", match: ["templejewellery", "templejewelry", "temple"] }
   ];
 
-  function esc(s) {
-    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&", "<": "<", ">": ">", '"': """, "'": "'" }[c];
-    });
+function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&")
+      .replace(/</g, "<")
+      .replace(/>/g, ">")
+      .replace(/"/g, """")
+      .replace(/'/g, "'");
   }
 
   function money(n) {

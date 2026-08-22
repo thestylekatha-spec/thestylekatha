@@ -114,18 +114,12 @@
   font-size:36px;
   letter-spacing:2px;
   margin-bottom:10px;
-  animation:heroIn .8s cubic-bezier(.22,.61,.36,1) both;
 }
 .ak .ak-hero .shop-now{
   font-size:14px;
   text-decoration:underline;
   color:var(--muted);
   display:inline-block;
-  animation:heroIn .8s cubic-bezier(.22,.61,.36,1) .15s both;
-}
-@keyframes heroIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
 }
 
 

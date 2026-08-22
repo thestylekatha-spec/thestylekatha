@@ -96,3 +96,164 @@
   .col-card { width: calc(33.333% - 10px); min-width: 90px; }
   .col-card span { font-size: 10.5px; letter-spacing: 0.08em; }
 }
+
+/* ===== Collection Product Marquee (new) ===== */
+#collections {
+  padding: 50px 0 30px;
+  background: var(--bg-dark);
+}
+#collections h2 {
+  text-align: center;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(28px, 4vw, 42px);
+  color: var(--cream);
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.collection-cat-section {
+  margin: 40px 0 16px;
+}
+.collection-cat-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--cream);
+}
+.collection-cat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+}
+.collection-cat-heading span {
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  font-weight: 500;
+}
+.collection-cat-heading:hover span { color: var(--gold); }
+
+.marquee-wrap.collection-marquee {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
+}
+.marquee-wrap.collection-marquee:hover .collection-track {
+  animation-play-state: paused;
+}
+
+.collection-track {
+  display: flex;
+  gap: 16px;
+  padding: 0 20px;
+  flex-shrink: 0;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.collection-product-card {
+  background: var(--bg-dark-2);
+  border: 1px solid rgba(201,163,92,0.16);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .6s var(--ease), border-color .5s ease, box-shadow .6s var(--ease);
+  contain: content;
+  width: 220px;
+  flex-shrink: 0;
+}
+.collection-product-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: 0 24px 46px rgba(0,0,0,0.4);
+}
+
+.collection-card-media {
+  position: relative;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.collection-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .7s var(--ease);
+}
+.collection-product-card:hover .collection-card-media img { transform: scale(1.08); }
+
+.collection-card-media .badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: #241d10;
+  padding: 4px 9px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.collection-card-media .badge.alt { background: var(--emerald); color: var(--cream); }
+
+.collection-card-body { padding: 14px 14px 16px; }
+.collection-card-cat {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.collection-card-body h3 { color: var(--cream); font-size: 16px; font-weight: 500; margin-bottom: 8px; }
+
+.collection-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.collection-price {
+  color: var(--gold-soft);
+  font-size: 18px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.price-old { color: rgba(245,239,226,0.35); font-size: 13px; text-decoration: line-through; }
+
+.collection-add-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold-soft);
+  padding: 10px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease;
+}
+.collection-add-btn:hover { background: var(--gold); color: #241d10; }
+.collection-add-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.collection-empty {
+  color: rgba(245,239,226,0.6);
+  text-align: center;
+  padding: 40px 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .collection-product-card { width: 160px; }
+  .collection-card-body h3 { font-size: 14px; }
+  .collection-price { font-size: 16px; }
+}

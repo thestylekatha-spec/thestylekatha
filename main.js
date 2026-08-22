@@ -559,6 +559,18 @@
         removeItem: function(idx){
           cart.splice(idx, 1);
           renderCart();
+        },
+        addItem: function(item){
+          var existing = cart.find(function(c){ return c.id === item.id; });
+          if (existing) {
+            existing.qty += item.qty || 1;
+            if (existing.qty > 10) existing.qty = 10;
+          } else {
+            cart.push({ id: item.id, name: item.name, cat: item.cat, price: item.price, image: item.image, qty: item.qty || 1 });
+          }
+          renderCart();
+          showToast(item.name, fmtPrice(item.price));
+          trackRecentlyViewed({ id: item.id, name: item.name, cat: item.cat, price: item.price, image: item.image });
         }
       };
 

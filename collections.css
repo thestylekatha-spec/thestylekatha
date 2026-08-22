@@ -98,6 +98,11 @@
 }
 
 /* ===== Collection Product Marquee (new) ===== */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
 #collections {
   padding: 50px 0 30px;
   background: var(--bg-dark);

@@ -56,9 +56,16 @@
     }, 3200);
   }
 
-  function detailHTML(p, catName) {
+  function detailHTML(p, catName, catSlug) {
     var soldOut = p.is_active === false || p.in_stock === false;
     var features = Array.isArray(p.features) && p.features.length ? p.features : DEFAULT_FEATURES;
+    var isCustom = /custom/.test(String(catSlug || "")) || /custom/i.test(String(p.category || ""));
+    var customField = isCustom
+      ? '<div class="pd-qty-row">' +
+          '<span class="pd-qty-label">Name on piece</span>' +
+          '<input type="text" id="customNameInput" class="pd-custom-input" maxlength="15" placeholder="e.g. Ananya" autocomplete="off">' +
+        "</div>"
+      : "";
     var old = p.old_price
       ? '<span class="pd-price-old">' + money(p.old_price) + "</span>" +
         '<span class="pd-save">Save ' + money(Number(p.old_price) - Number(p.price)) + "</span>"
@@ -78,6 +85,7 @@
         '<h1 class="pd-name">' + esc(p.name) + "</h1>" +
         '<div class="pd-price-row"><span class="pd-price">' + money(p.price) + "</span>" + old + "</div>" +
         '<div class="pd-tax">Inclusive of all taxes</div>' +
+        customField +
         '<div class="pd-stock ' + (soldOut ? "out" : "in") + '">' +
           (soldOut ? "Out of stock" : "In stock — ready to ship") + "</div>" +
         '<p class="pd-desc">' + esc(p.description || DEFAULT_DESC) + "</p>" +
@@ -117,12 +125,14 @@ function relatedCardHTML(p) {
     );
   }
 
-  function wireActions(p, catName) {
+  function wireActions(p, catName, catSlug) {
     var qty = 1;
     var qtyValue = document.getElementById("qtyValue");
     var minus = document.getElementById("qtyMinus");
     var plus = document.getElementById("qtyPlus");
     var addBtn = document.getElementById("addToBag");
+    var nameInput = document.getElementById("customNameInput");
+    var isCustom = !!nameInput;
 
     if (minus) minus.addEventListener("click", function () {
       qty = Math.max(1, qty - 1); qtyValue.textContent = qty;
@@ -131,16 +141,27 @@ function relatedCardHTML(p) {
       qty = Math.min(99, qty + 1); qtyValue.textContent = qty;
     });
     if (addBtn) addBtn.addEventListener("click", function () {
+      var customName = "";
+      if (isCustom) {
+        customName = (nameInput.value || "").trim();
+        if (!customName) {
+          nameInput.classList.add("pd-custom-error");
+          nameInput.placeholder = "Please enter a name";
+          nameInput.focus();
+          return;
+        }
+      }
       window.SKCart.add({
         id: p.id,
         name: p.name,
         cat: catName || p.category || "",
         price: Number(p.price) || 0,
-        image: p.image_url
+        image: p.image_url,
+        customName: customName
       }, qty);
       addBtn.textContent = "Added ✓";
       setTimeout(function () { addBtn.textContent = "Add to Bag"; }, 1400);
-      toast(p.name, money(p.price));
+      toast(p.name + (customName ? ' ("' + customName + '")' : ""), money(p.price));
     });
   }
 
@@ -197,8 +218,8 @@ function relatedCardHTML(p) {
         crumbCat.href = "index.html";
       }
 
-      wrap.innerHTML = detailHTML(p, catName);
-      wireActions(p, catName);
+      wrap.innerHTML = detailHTML(p, catName, catSlug);
+      wireActions(p, catName, catSlug);
       loadRelated(p);
     } catch (e) {
       console.error("Product page error:", e);

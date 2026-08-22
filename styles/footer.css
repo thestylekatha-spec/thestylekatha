@@ -63,3 +63,9 @@ footer {
   letter-spacing: 0.04em;
   opacity: 0.55;
 }
+
+/* Footer brand block — same arrangement as the navbar logo */
+.footer-logo .logo-mark { height: 56px; }
+.footer-logo .logo-brand { font-size: 22px; }
+.footer-logo .logo-the { letter-spacing: 5px; }
+.footer-logo .logo-sub { font-size: 7px; letter-spacing: 1.2px; }

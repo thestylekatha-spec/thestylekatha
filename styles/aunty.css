@@ -317,12 +317,29 @@
 }
 .ak .insta-grid{
   display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:10px;
-  max-width:1400px;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  max-width:720px;
   margin:0 auto;
 }
-.ak .insta-grid img{
+.ak .insta-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:26px;
+  padding:11px 26px;
+  border:1px solid var(--gold-light);
+  border-radius:999px;
+  color:var(--gold-light);
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:background .3s,color .3s,transform .3s;
+}
+.ak .insta-btn:hover{background:var(--gold-light);color:#141414;transform:translateY(-2px);}
+.ak .insta-grid img,
+.ak .insta-grid video{
   width:100%;
   aspect-ratio:9/16;
   object-fit:cover;
@@ -415,6 +432,28 @@
   .ak .insta-grid{grid-template-columns:repeat(3,1fr);}
   .ak .footer-grid{grid-template-columns:1fr 1fr;}
   .ak .ak-stats{grid-template-columns:1fr;}
+}
+
+/* Mobile — stack the footer into one clean column */
+@media (max-width:560px){
+  .ak .footer-grid{
+    grid-template-columns:1fr;
+    gap:34px;
+    text-align:center;
+  }
+  .ak .footer-grid .logo{justify-content:center;}
+  /* Collection links in a tidy 2-per-row grid */
+  .ak .footer-grid ul{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 14px;
+    list-style:none;
+    padding:0;
+    max-width:320px;
+    margin:0 auto;
+  }
+  .ak .footer-grid li{margin-bottom:0;}
+  .ak .newsletter-form{max-width:320px;margin:0 auto;}
 }
 
 @media (prefers-reduced-motion: reduce){

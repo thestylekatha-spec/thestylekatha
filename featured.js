@@ -1,23 +1,14 @@
 /* ===== The Style Katha — Featured category rows (admin-driven) =====
-   Renders the three homepage category rows (Necklaces, Bracelets, Temple
-   Jewellery) from the products you add in admin.html. Markup + classes are
-   identical to the old hard-coded HTML, so the marquee animation, reveal
-   effect and card styling stay exactly the same.
+   Renders ONE scrolling marquee row per active category, straight from
+   Supabase (order = sort_order). Add/rename/reorder categories in
+   admin.html and the homepage rows update automatically — no hardcoded
+   list here. Categories with no products are skipped.
 
    Include AFTER collections.js:  <script src="featured.js"></script>
 */
 (function () {
   var MOUNT_ID = "featuredCategories";
-  var MAX_PER_ROW = 10;
-
-  /* Which rows to show, in order. `match` values are compared (lowercase,
-     ignoring spaces/dashes) against the category slug and name coming from
-     the admin panel. Edit this list to change the homepage rows. */
-  var ROWS = [
-    { title: "NECKLACES", match: ["necklaces", "necklace"] },
-    { title: "BRACELETS", match: ["bracelets", "bracelet"] },
-    { title: "TEMPLE JEWELLERY", match: ["templejewellery", "templejewelry", "temple"] }
-  ];
+  var MAX_PER_ROW = 20;
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -87,24 +78,6 @@
   }
 
 
-  function pickCategory(cats, row) {
-    var wanted = row.match.map(norm);
-    for (var i = 0; i < wanted.length; i++) {
-      for (var j = 0; j < cats.length; j++) {
-        if (norm(cats[j].slug) === wanted[i] || norm(cats[j].name) === wanted[i]) return cats[j];
-      }
-    }
-    // looser: category name/slug contains the keyword
-    for (var k = 0; k < cats.length; k++) {
-      for (var m = 0; m < wanted.length; m++) {
-        if (norm(cats[k].name).indexOf(wanted[m]) > -1 || norm(cats[k].slug).indexOf(wanted[m]) > -1) {
-          return cats[k];
-        }
-      }
-    }
-    return null;
-  }
-
   async function loadCategories() {
     if (Array.isArray(window.SK_COLLECTIONS) && window.SK_COLLECTIONS.length) {
       return window.SK_COLLECTIONS;
@@ -148,6 +121,9 @@
     return list.filter(function (p) { return p && p.image_url; });
   }
 
+  /* Every active category from Supabase gets its own marquee row on the
+     homepage, in sort_order — no hardcoded list. Categories with no
+     products are skipped entirely so empty sections never show. */
   async function init() {
     var mount = document.getElementById(MOUNT_ID);
     if (!mount) return;
@@ -159,20 +135,27 @@
       console.warn("Featured rows: could not load categories.", e);
     }
 
-    var html = "";
-    for (var i = 0; i < ROWS.length; i++) {
-      var cat = pickCategory(cats, ROWS[i]);
+    var sections = [];
+    for (var i = 0; i < cats.length; i++) {
       var products = [];
       try {
-        products = await loadProducts(cat);
+        products = await loadProducts(cats[i]);
       } catch (e) {
-        console.warn("Featured rows: could not load products.", e);
+        console.warn("Featured rows: could not load products for", cats[i].name, e);
       }
-      html += sectionHTML(ROWS[i], cat, products, i === 0);
+      products = products.filter(function (p) { return p && p.image_url; });
+      if (!products.length) continue; // skip empty categories
+      sections.push(sectionHTML(cats[i], cats[i], products, sections.length === 0));
+    }
+
+    if (!sections.length) {
+      mount.className = "ak";
+      mount.innerHTML = "";
+      return;
     }
 
     mount.className = "ak";
-    mount.innerHTML = html;
+    mount.innerHTML = sections.join("");
     enhanceMarquees(mount);
 
     /* aunty.css hides .ak .reveal until it gets .visible (its own observer

@@ -89,3 +89,25 @@
   .pd-wrap{grid-template-columns:1fr;gap:26px;}
   .pd-actions .pd-btn{flex:1 1 100%;}
 }
+
+/* Custom name input (Customized Name products) */
+.pd-custom-input {
+  flex: 1;
+  max-width: 260px;
+  padding: 10px 14px;
+  border: 1px solid #d8cfc0;
+  border-radius: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  letter-spacing: .05em;
+  outline: none;
+  transition: border-color .25s, box-shadow .25s;
+}
+.pd-custom-input:focus {
+  border-color: #c9a35c;
+  box-shadow: 0 0 0 3px rgba(201, 163, 92, 0.15);
+}
+.pd-custom-input.pd-custom-error {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+}

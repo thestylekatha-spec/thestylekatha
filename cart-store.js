@@ -34,7 +34,9 @@
       var q = Math.max(1, parseInt(qty || 1, 10));
       var found = null;
       for (var i = 0; i < list.length; i++) {
-        if (String(list[i].id) === String(item.id)) { found = list[i]; break; }
+        // Same product with a different custom name = separate line item
+        if (String(list[i].id) === String(item.id) &&
+            String(list[i].customName || "") === String(item.customName || "")) { found = list[i]; break; }
       }
       if (found) found.qty = (found.qty || 1) + q;
       else list.push({
@@ -43,6 +45,7 @@
         cat: item.cat || "",
         price: Number(item.price) || 0,
         image: item.image || "",
+        customName: item.customName || "",
         qty: q
       });
       write(list);

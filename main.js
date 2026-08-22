@@ -495,7 +495,7 @@
             var imgHtml = imgSrc ? '<img src="' + imgSrc + '" alt="' + item.name + '">' : '<div class="cart-item-placeholder"></div>';
             return '<div class="cart-item" data-idx="' + idx + '">' +
               '<div class="cart-item-media">' + imgHtml + '</div>' +
-              '<div class="cart-item-info"><div class="cart-item-name">' + item.name + '</div><div class="cart-item-cat">' + item.cat + '</div></div>' +
+              '<div class="cart-item-info"><div class="cart-item-name">' + item.name + '</div><div class="cart-item-cat">' + item.cat + (item.customName ? ' · Name: ' + escapeHtml(item.customName) : '') + '</div></div>' +
               '<div class="cart-item-right">' +
                 '<span class="cart-item-price">' + fmt(item.price) + '</span>' +
                 '<div class="cart-item-qty">' +
@@ -695,14 +695,25 @@
     // Named (not IIFE) because it must re-run after product cards are injected.
     function initReveal(){
       var revealEls = document.querySelectorAll('.reveal, .reveal-scale, .reveal-line');
+      // iOS-safe fallback: without IntersectionObserver, just show everything
+      if (typeof IntersectionObserver === 'undefined') {
+        revealEls.forEach(function(el){ el.classList.add('in'); });
+        return;
+      }
+      var io;
+      try {
+        io = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            entry.target.classList.toggle('in', entry.isIntersecting);
+          });
+        }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+      } catch (e) {
+        revealEls.forEach(function(el){ el.classList.add('in'); });
+        return;
+      }
       revealEls.forEach(function(el, i){
         el.style.transitionDelay = (Math.min(i % 4, 4) * 0.09) + 's';
       });
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          entry.target.classList.toggle('in', entry.isIntersecting);
-        });
-      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
       revealEls.forEach(function(el){ io.observe(el); });
 
       // Immediately add .in class to elements already in viewport
@@ -712,6 +723,13 @@
         var inView = rect.top < window.innerHeight && rect.bottom > 0;
         if (inView) el.classList.add('in');
       });
+      // Safety net: never leave content permanently invisible
+      setTimeout(function(){
+        revealEls.forEach(function(el){
+          var rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight + 200) el.classList.add('in');
+        });
+      }, 2000);
     }
     window.initReveal = initReveal;
 

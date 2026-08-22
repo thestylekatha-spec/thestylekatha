@@ -86,6 +86,20 @@
     }
     window.SK_COLLECTIONS = cats;
     render(cats);
+    renderFooterLinks(cats);
+  }
+
+  /* Footer "Collection" list — same categories, linked to their pages */
+  function renderFooterLinks(cats) {
+    var ul = document.getElementById("footerCollectionLinks");
+    if (!ul) return;
+    if (!cats.length) {
+      ul.innerHTML = "";
+      return;
+    }
+    ul.innerHTML = cats.map(function (c) {
+      return '<li><a href="' + href(c) + '">' + esc(c.name) + "</a></li>";
+    }).join("");
   }
 
   if (document.readyState === "loading") {

@@ -22,7 +22,7 @@
 @media (max-width: 520px) {
   nav { padding: 12px 14px; gap: 10px; }
   .logo-mark { height: 45px; }
-  .logo-sub { font-size: 6px; letter-spacing: 1.2px; }
+  .logo-sub { font-size: 5px; letter-spacing: 0.8px; }
   .logo-brand { font-size: 16px; }
   .grid { grid-template-columns: 1fr; }
   .foot-grid { grid-template-columns: 1fr; }

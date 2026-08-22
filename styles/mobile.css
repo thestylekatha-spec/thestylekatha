@@ -97,3 +97,13 @@
   .ak .collections-track,
   .ring-wrap { animation: none !important; }
 }
+
+/* --- JS-driven marquees (marquee.js): fully disable the CSS animations and native scrolling so alternating directions work everywhere --- */
+.mq-js .product-track,
+.mq-js .cat-track {
+  animation: none !important;
+}
+.mq-js {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}

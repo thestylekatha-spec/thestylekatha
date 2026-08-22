@@ -16,6 +16,8 @@
     if (all[1] && all[1].parentNode) all[1].parentNode.removeChild(all[1]);
     track.style.animation = "none";
     track.style.willChange = "transform";
+    wrap.style.overflow = "hidden";   // kill native scroll — JS drives the loop
+    wrap.classList.add("mq-js");      // CSS-side !important kill-switch
     wrap.style.touchAction = "pan-y"; // vertical page scroll keeps working
 
     var P = 0;   // ONE repeat-unit of the content, px (NOT the whole track)
@@ -76,14 +78,24 @@
     }
     requestAnimationFrame(loop);
 
-    /* --- Drag / swipe --- */
+    /* --- Drag / swipe + tap-to-open --- */
     function startDrag(x) { dragging = true; moved = 0; lastX = x; }
     function moveDrag(x) {
       if (!dragging) return;
       var dx = x - lastX; lastX = x; moved += Math.abs(dx);
       if (P > 0) { offset -= dx; normalize(); }
     }
-    function endDrag() { dragging = false; }
+    // A tap (finger/mouse barely moved) opens the product under it —
+    // we navigate ourselves because pointer capture can swallow the
+    // browser's native click on mobile.
+    function release(e) {
+      var wasTap = dragging && moved <= 10;
+      dragging = false;
+      if (wasTap && e && e.target && e.target.closest) {
+        var a = e.target.closest("a[href]");
+        if (a) window.location.href = a.href;
+      }
+    }
 
     if ("PointerEvent" in window) {
       wrap.addEventListener("pointerdown", function (e) {
@@ -91,7 +103,7 @@
         try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
       });
       wrap.addEventListener("pointermove", function (e) { moveDrag(e.clientX); });
-      wrap.addEventListener("pointerup", endDrag);
+      wrap.addEventListener("pointerup", release);
       wrap.addEventListener("pointercancel", endDrag);
     } else {
       // Old iOS/Android fallback (no Pointer Events)
@@ -101,7 +113,7 @@
       wrap.addEventListener("touchmove", function (e) {
         moveDrag(e.touches[0].clientX);
       }, { passive: true });
-      wrap.addEventListener("touchend", endDrag);
+      wrap.addEventListener("touchend", release);
       wrap.addEventListener("touchcancel", endDrag);
     }
 
@@ -116,11 +128,14 @@
     measure();
   }
 
-  var productRowIndex = 0; // alternate direction per category row
   function run() {
-    document.querySelectorAll(".marquee-wrap").forEach(function (w) {
-      enhance(w, ".product-track", (productRowIndex++ % 2 === 0) ? 1 : -1);
-    });
+    // Direction is decided by FIXED row position in the page (0th row →
+    // right-to-left, 1st row → left-to-right, ...), never by a running
+    // counter — so re-renders can't shuffle the directions.
+    var rows = document.querySelectorAll(".marquee-wrap");
+    for (var i = 0; i < rows.length; i++) {
+      enhance(rows[i], ".product-track", i % 2 === 0 ? 1 : -1);
+    }
     document.querySelectorAll(".cat-strip").forEach(function (w) { enhance(w, ".cat-track", 1); });
   }
 

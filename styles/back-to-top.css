@@ -1,0 +1,42 @@
+/* ========================================
+   Back to Top Button
+   ======================================== */
+
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--bg-dark);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity .3s ease, visibility .3s ease, transform .3s ease, background .2s ease;
+  box-shadow: 0 4px 20px rgba(201,163,92,0.4);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--gold-soft);
+  transform: translateY(-3px);
+}
+
+.back-to-top svg { width: 20px; height: 20px; }
+
+@media (max-width: 520px) {
+  .back-to-top { bottom: 20px; left: 20px; width: 40px; height: 40px; }
+}

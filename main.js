@@ -702,6 +702,14 @@
         });
       }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
       revealEls.forEach(function(el){ io.observe(el); });
+
+      // Immediately add .in class to elements already in viewport
+      // (IntersectionObserver fires asynchronously, so we check manually too)
+      revealEls.forEach(function(el){
+        var rect = el.getBoundingClientRect();
+        var inView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inView) el.classList.add('in');
+      });
     }
     window.initReveal = initReveal;
 

@@ -175,11 +175,10 @@
     mount.innerHTML = html;
     enhanceMarquees(mount);
 
-    var tries = 0;
-    (function reveal() {
-      if (typeof window.initReveal === "function") { window.initReveal(); return; }
-      if (tries++ < 20) setTimeout(reveal, 200);
-    })();
+    // Ensure reveal animations work for newly injected content
+    setTimeout(function() {
+      if (typeof window.initReveal === "function") window.initReveal();
+    }, 0);
   }
 
   /* Touch friendliness: pause while the finger is down, resume after, and

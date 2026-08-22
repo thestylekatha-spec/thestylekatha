@@ -257,12 +257,16 @@
         badgeAlt: row.badge_alt,
         image: row.image_url,
         description: row.description || '',
-        features: row.features || []
+        features: row.features || [],
+        inStock: row.in_stock !== false
       };
     }
 
     function productCardHTML(p){
-      var badgeHtml = p.badge
+      var soldOut = p.inStock === false;
+      var badgeHtml = soldOut
+        ? '<span class="badge out-of-stock">Out of Stock</span>'
+        : p.badge
         ? '<span class="badge' + (p.badgeAlt ? ' alt' : '') + '">' + escapeHtml(p.badge) + '</span>'
         : '';
       var oldPriceHtml = p.oldPrice
@@ -272,7 +276,7 @@
       var imgSrc = p.image;
       var filterCat = p.category_id || p.category; // use category_id for filtering if available
       return (
-        '<div class="card reveal-scale" data-id="' + escapeHtml(p.id) + '" data-name="' + escapeHtml(p.name) + '" data-cat="' + escapeHtml(filterCat) + '" data-price="' + escapeHtml(p.price) + '" data-desc="' + escapeHtml(p.description || DEFAULT_DESC) + '" data-features=\'' + escapeHtml(JSON.stringify(p.features || DEFAULT_FEATURES)) + '\'>' +
+        '<div class="card reveal-scale" data-id="' + escapeHtml(p.id) + '" data-name="' + escapeHtml(p.name) + '" data-cat="' + escapeHtml(filterCat) + '" data-price="' + escapeHtml(p.price) + '" data-desc="' + escapeHtml(p.description || DEFAULT_DESC) + '" data-features=\'' + escapeHtml(JSON.stringify(p.features || DEFAULT_FEATURES)) + '\' data-in-stock="' + (p.inStock !== false) + '">' +
           '<div class="card-media">' +
             badgeHtml +
             '<img src="' + imgSrc + '" alt="' + escapeHtml(p.name) + '" loading="lazy">' +
@@ -281,7 +285,7 @@
             '<div class="cat">' + escapeHtml(p.category) + '</div>' +
             '<h3>' + escapeHtml(p.name) + '</h3>' +
             '<div class="price-row"><span class="price">' + fmtPrice(p.price) + '</span>' + oldPriceHtml + '</div>' +
-            '<button class="add-btn">Add to Cart</button>' +
+            '<button class="add-btn"' + (soldOut ? ' disabled' : '') + '>' + (soldOut ? 'Sold Out' : 'Add to Cart') + '</button>' +
           '</div>' +
         '</div>'
       );
@@ -663,6 +667,7 @@
             var name = card.getAttribute('data-name');
             var cat = card.getAttribute('data-cat');
             var price = parseInt(card.getAttribute('data-price'), 10);
+            var inStock = card.getAttribute('data-in-stock') !== 'false';
             var img = card.querySelector('.card-media img');
             var image = img ? img.getAttribute('src') : '';
             var badge = card.querySelector('.badge');
@@ -670,7 +675,7 @@
             var badgeAlt = badge ? badge.classList.contains('alt') : false;
             var oldPriceEl = card.querySelector('.price-old');
             var oldPrice = oldPriceEl ? parseInt(oldPriceEl.textContent.replace(/[^\d]/g, ''), 10) : 0;
-            openQuickView({ id: id, name: name, cat: cat, price: price, image: image, badge: badgeText, badgeAlt: badgeAlt, oldPrice: oldPrice, description: card.getAttribute('data-desc') || DEFAULT_DESC, features: JSON.parse(card.getAttribute('data-features') || '[]').length ? JSON.parse(card.getAttribute('data-features') || '[]') : DEFAULT_FEATURES });
+            openQuickView({ id: id, name: name, cat: cat, price: price, inStock: inStock, image: image, badge: badgeText, badgeAlt: badgeAlt, oldPrice: oldPrice, description: card.getAttribute('data-desc') || DEFAULT_DESC, features: JSON.parse(card.getAttribute('data-features') || '[]').length ? JSON.parse(card.getAttribute('data-features') || '[]') : DEFAULT_FEATURES });
             trackRecentlyViewed({ id: id, name: name, cat: cat, price: price, image: image });
           });
         }
@@ -775,17 +780,23 @@
       var modal = document.getElementById('qvModal');
       var imageEl = document.getElementById('qvImage');
       var detailsEl = document.getElementById('qvDetails');
-      var badgeHtml = product.badge ? '<span class="qv-badge' + (product.badgeAlt ? ' alt' : '') + '">' + escapeHtml(product.badge) + '</span>' : '';
+      var soldOut = product.inStock === false;
+      var badgeHtml = soldOut
+        ? '<span class="qv-badge out-of-stock">Out of Stock</span>'
+        : product.badge
+        ? '<span class="qv-badge' + (product.badgeAlt ? ' alt' : '') + '">' + escapeHtml(product.badge) + '</span>'
+        : '';
       var oldPriceHtml = product.oldPrice ? '<span class="qv-price-old">' + fmtPrice(product.oldPrice) + '</span>' : '';
       imageEl.innerHTML = badgeHtml + '<img src="' + product.image + '" alt="' + escapeHtml(product.name) + '">';
       detailsEl.innerHTML =
         '<div class="qv-cat">' + escapeHtml(product.cat) + '</div>' +
         '<div class="qv-name">' + escapeHtml(product.name) + '</div>' +
         '<div class="qv-price-row"><span class="qv-price">' + fmtPrice(product.price) + '</span>' + oldPriceHtml + '</div>' +
+        '<div class="qv-stock ' + (soldOut ? 'out' : 'in') + '">' + (soldOut ? 'Out of stock' : 'In stock — ready to ship') + '</div>' +
         '<p class="qv-desc">' + escapeHtml(product.description || DEFAULT_DESC) + '</p>' +
         ((product.features && product.features.length) ? '<ul class="qv-features">' + product.features.map(function(f){ return '<li>' + escapeHtml(f) + '</li>'; }).join('') + '</ul>' : '') +
         '<div class="qv-actions">' +
-          '<button class="btn btn-gold qv-add-btn">Add to Bag</button>' +
+          '<button class="btn btn-gold qv-add-btn"' + (soldOut ? ' disabled' : '') + '>' + (soldOut ? 'Sold Out' : 'Add to Bag') + '</button>' +
           '<button class="btn btn-outline btn-outline-light qv-close-btn">Close</button>' +
         '</div>';
       detailsEl.querySelector('.qv-add-btn').addEventListener('click', function(){

@@ -122,12 +122,13 @@
   async function loadProducts(cat) {
     var sb = window.supabaseClient;
     if (!sb || !cat) return [];
-    var cols = "id, name, price, old_price, badge, image_url, is_active, category, category_id";
+    var cols = "id, name, price, old_price, badge, image_url, is_active, in_stock, category, category_id";
     var res = await sb
       .from("products")
       .select(cols)
       .eq("category_id", cat.id)
       .eq("is_active", true)
+      .eq("in_stock", true)
       .order("created_at", { ascending: false })
       .limit(MAX_PER_ROW);
     var list = res.error ? [] : res.data || [];
@@ -139,6 +140,7 @@
         .select(cols)
         .ilike("category", cat.name)
         .eq("is_active", true)
+        .eq("in_stock", true)
         .order("created_at", { ascending: false })
         .limit(MAX_PER_ROW);
       if (!alt.error) list = alt.data || [];

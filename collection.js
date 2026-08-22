@@ -37,14 +37,14 @@
     if (description) descEl.textContent = description;
   }
 
-  function cardHTML(p) {
-    var soldOut = p.is_active === false;
+function cardHTML(p) {
+    var soldOut = p.is_active === false || p.in_stock === false;
     var tag = soldOut
       ? '<span class="cl-tag">Out of Stock</span>'
       : p.badge
       ? '<span class="cl-tag sale">' + esc(p.badge) + "</span>"
       : "";
-    var old = p.old_price ? "<s>" + money(p.old_price) + "</s>" : "";
+    var old = p.old_price ? "" + money(p.old_price) + " </span>" : "";
     return (
       '<a class="cl-card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
         '<div class="cl-media">' + tag +

@@ -250,6 +250,15 @@
             </select>
           </div>
         </div>
+        <div class="row3">
+          <div>
+            <label for="fInStock">In Stock</label>
+            <select id="fInStock">
+              <option value="true">Yes</option>
+              <option value="false">No (Out of Stock)</option>
+            </select>
+          </div>
+        </div>
         <label for="fDesc">Description (shown in quick view)</label>
         <textarea id="fDesc" rows="3" placeholder="Short product description for customers"></textarea>
         <label for="fFeatures">Features (one per line, shown in quick view)</label>
@@ -390,6 +399,11 @@
     <textarea id="editDesc" rows="3" style="width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:6px; font-size:13px; font-family:inherit; box-sizing:border-box; resize:vertical;"></textarea>
     <label style="font-size:12px; font-weight:600; display:block; margin:12px 0 4px;">Features (one per line)</label>
     <textarea id="editFeatures" rows="4" style="width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:6px; font-size:13px; font-family:inherit; box-sizing:border-box; resize:vertical;"></textarea>
+    <label style="font-size:12px; font-weight:600; display:block; margin:12px 0 4px;">In Stock</label>
+    <select id="editInStock" style="width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:6px; font-size:13px; font-family:inherit; box-sizing:border-box;">
+      <option value="true">Yes</option>
+      <option value="false">No (Out of Stock)</option>
+    </select>
     <div style="display:flex; gap:10px; margin-top:16px;">
       <button onclick="closeEditModal()" style="flex:1; padding:10px; border:1px solid #ddd; border-radius:6px; background:#fff; cursor:pointer; font-size:13px;">Cancel</button>
       <button onclick="saveEditProduct()" id="editSaveBtn" style="flex:1; padding:10px; border:none; border-radius:6px; background:#c9a35c; color:#fff; cursor:pointer; font-size:13px; font-weight:600;">Save</button>
@@ -541,15 +555,16 @@
       productList.innerHTML = '<div class="empty-state">No products yet.</div>';
       return;
     }
-    productList.innerHTML = products.map(function(p){
+productList.innerHTML = products.map(function(p){
+      var stockBadge = p.in_stock === false ? '<span style="color:#c0564a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Out of Stock</span> ' : '';
       return (
         '<div class="product-row" data-id="' + p.id + '">' +
           '<img src="' + p.image_url + '" alt="">' +
           '<div class="info">' +
-            '<div class="name">' + (p.name || '(untitled)') + '</div>' +
+            '<div class="name">' + stockBadge + (p.name || '(untitled)') + '</div>' +
             '<div class="meta">' + (p.category || '') + ' · ₹' + (p.price != null ? Number(p.price).toLocaleString('en-IN') : '—') + '</div>' +
           '</div>' +
-          '<button class="btn-small" data-action="edit" data-id="' + p.id + '" data-name="' + (p.name||'').replace(/"/g,'&quot;') + '" data-desc="' + (p.description||'').replace(/"/g,'&quot;') + '" data-features="' + (p.features ? JSON.stringify(p.features).replace(/"/g,'&quot;') : '') + '" data-image="' + (p.image_url||'').replace(/"/g,'&quot;') + '" data-image-path="' + (p.image_path||'').replace(/"/g,'&quot;') + '">Edit</button>' +
+          '<button class="btn-small" data-action="edit" data-id="' + p.id + '" data-name="' + (p.name||'').replace(/"/g,'"') + '" data-desc="' + (p.description||'').replace(/"/g,'"') + '" data-features="' + (p.features ? JSON.stringify(p.features).replace(/"/g,'"') : '') + '" data-image="' + (p.image_url||'').replace(/"/g,'"') + '" data-image-path="' + (p.image_path||'').replace(/"/g,'"') + '" data-in-stock="' + (p.in_stock !== false) + '">Edit</button>' +
           '<button class="danger small" data-action="delete" data-id="' + p.id + '">Delete</button>' +
         '</div>'
       );
@@ -562,7 +577,7 @@
     });
     productList.querySelectorAll('[data-action="edit"]').forEach(function(btn){
       btn.addEventListener('click', function(){
-        openEditModal(btn.getAttribute('data-id'), btn.getAttribute('data-name'), btn.getAttribute('data-desc'), btn.getAttribute('data-features'), btn.getAttribute('data-image'), btn.getAttribute('data-image-path'));
+        openEditModal(btn.getAttribute('data-id'), btn.getAttribute('data-name'), btn.getAttribute('data-desc'), btn.getAttribute('data-features'), btn.getAttribute('data-image'), btn.getAttribute('data-image-path'), btn.getAttribute('data-in-stock'));
       });
     });
   }
@@ -624,6 +639,7 @@
     var oldPriceVal = document.getElementById('fOldPrice').value;
     var oldPrice = oldPriceVal ? parseInt(oldPriceVal, 10) : null;
     var badge = document.getElementById('fBadge').value;
+    var inStock = document.getElementById('fInStock').value === 'true';
     var description = document.getElementById('fDesc').value.trim();
     var featuresRaw = document.getElementById('fFeatures').value.trim();
     var features = featuresRaw ? featuresRaw.split('\n').map(function(l){ return l.trim(); }).filter(Boolean) : [];
@@ -670,7 +686,8 @@
         image_url: imageUrl,
         image_path: imagePath,
         description: description || null,
-        features: features.length ? features : null
+        features: features.length ? features : null,
+        in_stock: inStock
       };
 
       var insertResult = await supabase.from('products').insert(newProduct);
@@ -1095,7 +1112,7 @@
   var editProductId = null;
   var editImagePath = null;
 
-  window.openEditModal = function(id, name, desc, featuresJson, imageUrl, imagePath){
+  window.openEditModal = function(id, name, desc, featuresJson, imageUrl, imagePath, inStock){
     editProductId = id;
     editImagePath = imagePath || null;
     document.getElementById('editProductName').textContent = name;
@@ -1110,6 +1127,7 @@
     } catch(e) {
       document.getElementById('editFeatures').value = '';
     }
+    document.getElementById('editInStock').value = inStock === 'false' ? 'false' : 'true';
     document.getElementById('editStatus').textContent = '';
     document.getElementById('editModal').style.display = 'flex';
   };
@@ -1125,6 +1143,7 @@
     var desc = document.getElementById('editDesc').value.trim();
     var featuresRaw = document.getElementById('editFeatures').value.trim();
     var features = featuresRaw ? featuresRaw.split('\n').map(function(l){ return l.trim(); }).filter(Boolean) : null;
+    var inStock = document.getElementById('editInStock').value === 'true';
     var fileInput = document.getElementById('editImageFile');
     var file = fileInput.files[0];
     var statusEl = document.getElementById('editStatus');
@@ -1133,7 +1152,7 @@
     statusEl.textContent = 'Saving…';
     statusEl.style.color = '#888';
     try {
-      var updateData = { description: desc || null, features: features };
+      var updateData = { description: desc || null, features: features, in_stock: inStock };
       if (file) {
         if (file.size > 8 * 1024 * 1024) { throw new Error('Image is over 8MB.'); }
         statusEl.textContent = 'Uploading image…';
@@ -1215,6 +1234,12 @@
               '<option value="">Select category...</option>' + catOptions +
             '</select>' +
           '</div>' +
+          '<div style="margin-top:6px;">' +
+            '<select data-field="inStock" data-idx="' + i + '" style="width:100%; padding:6px 8px; border:1px solid #ddd; border-radius:4px; font-size:13px;">' +
+              '<option value="true">In Stock</option>' +
+              '<option value="false">Out of Stock</option>' +
+            '</select>' +
+          '</div>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -1233,10 +1258,12 @@
       var priceEl = bulkItemsEl.querySelector('[data-field="price"][data-idx="' + i + '"]');
       var oldPriceEl = bulkItemsEl.querySelector('[data-field="oldPrice"][data-idx="' + i + '"]');
       var catEl = bulkItemsEl.querySelector('[data-field="category"][data-idx="' + i + '"]');
+      var inStockEl = bulkItemsEl.querySelector('[data-field="inStock"][data-idx="' + i + '"]');
       var name = nameEl ? nameEl.value.trim() : f.name.replace(/\.[^.]+$/, '');
       var price = priceEl ? parseInt(priceEl.value, 10) : 0;
       var oldPrice = oldPriceEl ? parseInt(oldPriceEl.value, 10) : null;
       var cat = catEl ? catEl.value : defaultCat;
+      var inStock = inStockEl ? inStockEl.value === 'true' : true;
       if (!name || !price) { errors++; setStatus(bulkStatus, 'info', 'Skipping "' + name + '" — no name or price. (' + (i+1) + '/' + bulkFiles.length + ')'); continue; }
       try {
         var ext = (f.name.split('.').pop() || 'jpg').toLowerCase();
@@ -1256,7 +1283,8 @@
           image_url: urlResult.data.publicUrl,
           image_path: imagePath,
           description: null,
-          features: null
+          features: null,
+          in_stock: inStock
         };
         var insResult = await supabase.from('products').insert(product);
         if (insResult.error) throw insResult.error;

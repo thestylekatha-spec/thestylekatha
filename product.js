@@ -57,7 +57,7 @@
   }
 
   function detailHTML(p, catName) {
-    var soldOut = p.is_active === false;
+    var soldOut = p.is_active === false || p.in_stock === false;
     var features = Array.isArray(p.features) && p.features.length ? p.features : DEFAULT_FEATURES;
     var old = p.old_price
       ? '<span class="pd-price-old">' + money(p.old_price) + "</span>" +
@@ -102,12 +102,13 @@
     );
   }
 
-  function relatedCardHTML(p) {
-    var old = p.old_price ? "<s>" + money(p.old_price) + "</s>" : "";
+function relatedCardHTML(p) {
+    var soldOut = p.is_active === false || p.in_stock === false;
+    var old = p.old_price ? "" + money(p.old_price) + " </span>" : "";
     return (
       '<a class="cl-card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
         '<div class="cl-media">' +
-          (p.is_active === false ? '<span class="cl-tag">Out of Stock</span>' : "") +
+          (soldOut ? '<span class="cl-tag">Out of Stock</span>' : "") +
           '<img src="' + esc(p.image_url) + '" alt="' + esc(p.name) + '" loading="lazy">' +
         "</div>" +
         '<h2 class="cl-name">' + esc(p.name) + "</h2>" +

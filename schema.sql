@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS public.products (
   description TEXT,
   features JSONB,
   is_active BOOLEAN DEFAULT true,
+  in_stock BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now()
 );
@@ -104,7 +105,7 @@ CREATE POLICY "categories_delete_auth"
 DROP POLICY IF EXISTS "products_select_public" ON public.products;
 CREATE POLICY "products_select_public"
   ON public.products FOR SELECT
-  USING (is_active = true);
+  USING (is_active = true AND in_stock = true);
 
 DROP POLICY IF EXISTS "products_select_auth" ON public.products;
 CREATE POLICY "products_select_auth"

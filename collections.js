@@ -88,6 +88,7 @@
 
   function render(cats) {
     var catsEl = document.getElementById("collectionsTrack");
+    console.log("Collections render called, cats:", cats.length, "container:", !!catsEl);
     if (!catsEl) return;
 
     if (!cats.length) {
@@ -205,17 +206,22 @@
   async function load() {
     var cats = [];
     try {
+      console.log("Collections: supabaseClient available?", !!window.supabaseClient);
       if (window.supabaseClient) {
         var res = await window.supabaseClient
           .from("categories")
           .select("id, name, slug, icon, image_url, sort_order, is_active")
           .eq("is_active", true)
           .order("sort_order", { ascending: true });
+        console.log("Categories query result:", res);
         if (res.error) throw res.error;
         cats = res.data || [];
+        console.log("Categories loaded:", cats.length);
+      } else {
+        console.warn("Collections: supabaseClient not available");
       }
     } catch (e) {
-      console.warn("Collections: could not load from Supabase.", e);
+      console.error("Collections: error loading categories:", e);
     }
     window.SK_COLLECTIONS = cats;
     render(cats);

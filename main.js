@@ -466,6 +466,8 @@
             if (phoneEl) phoneEl.textContent = phoneDisplay;
             if (callLink) callLink.href = 'tel:+' + phone;
             if (waLink) waLink.href = 'https://wa.me/' + whatsapp;
+            // Keep the order-confirmation WhatsApp number in sync with Supabase
+            if (whatsapp) WHATSAPP_NUMBER = whatsapp;
             if (phoneDisplay) {
               DEFAULT_DESC = 'A beautiful piece from our collection. Want to know more? Call us at ' + phoneDisplay + '.';
             }

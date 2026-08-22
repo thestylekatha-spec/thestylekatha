@@ -8,9 +8,8 @@ window.SITE_CONFIG = {
     productBucket: 'product-images'
   },
   whatsapp: {
-    // Replace with your WhatsApp business number in international format (no + or spaces)
-    // e.g. '919876543210'
-    number: 'YOUR_WHATSAPP_NUMBER'
+    // Fallback only — the live number comes from Supabase (site_settings)
+    number: '9177133424'
   },
   currency: {
     symbol: '₹',

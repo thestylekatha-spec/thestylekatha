@@ -175,9 +175,21 @@
     mount.innerHTML = html;
     enhanceMarquees(mount);
 
+    /* aunty.css hides .ak .reveal until it gets .visible (its own observer
+       only runs once at page load, before these rows exist), while
+       main.js's initReveal adds .in. Add .visible ourselves so the
+       section headings ("NECKLACES", "BRACELETS", ...) actually show up. */
+    Array.prototype.forEach.call(mount.querySelectorAll(".reveal"), function (el) {
+      el.classList.add("visible");
+    });
+
     // Ensure reveal animations work for newly injected content
     setTimeout(function() {
       if (typeof window.initReveal === "function") window.initReveal();
+      // re-assert visibility in case initReveal resets anything
+      Array.prototype.forEach.call(mount.querySelectorAll(".reveal"), function (el) {
+        el.classList.add("visible");
+      });
     }, 0);
   }
 

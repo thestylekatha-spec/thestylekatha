@@ -1,0 +1,113 @@
+/* ===== Product detail page ===== */
+.pd-page .nav-icons{display:flex;align-items:center;gap:18px;}
+.pd-bag-link{position:relative;display:inline-flex;align-items:center;color:inherit;}
+.pd-bag-count{
+  position:absolute;top:-7px;right:-10px;min-width:18px;height:18px;
+  border-radius:999px;background:#b8860b;color:#fff;font-size:11px;
+  display:flex;align-items:center;justify-content:center;padding:0 5px;
+}
+
+.pd-main{padding-bottom:80px;}
+
+.pd-wrap{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:52px;
+  margin-top:30px;
+  align-items:start;
+}
+
+.pd-media{
+  position:relative;
+  border:1px solid var(--cl-border,#eae2d6);
+  border-radius:6px;
+  overflow:hidden;
+  background:#faf7f2;
+}
+.pd-media img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;}
+.pd-badge{
+  position:absolute;top:14px;left:14px;z-index:2;
+  background:#8b0f1d;color:#fff;font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;padding:6px 11px;border-radius:2px;
+}
+
+.pd-info{padding-top:4px;}
+.pd-cat{
+  font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#b8860b;
+  margin-bottom:10px;
+}
+.pd-name{
+  font-family:Montserrat, Georgia, serif;
+  font-weight:700;
+  font-size:clamp(24px,3.2vw,34px);
+  line-height:1.2;
+  margin:0 0 14px;
+}
+.pd-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;}
+.pd-price{font-size:26px;font-weight:600;}
+.pd-price-old{font-size:17px;color:#9a9086;text-decoration:line-through;}
+.pd-save{font-size:12px;color:#1d7a4c;font-weight:600;}
+.pd-tax{font-size:12px;color:var(--cl-muted,#7a6f65);margin-bottom:20px;}
+
+.pd-stock{font-size:13px;font-weight:600;margin-bottom:18px;}
+.pd-stock.in{color:#1d7a4c;}
+.pd-stock.out{color:#8b0f1d;}
+
+.pd-desc{font-size:15px;line-height:1.75;color:#4a443d;margin:0 0 18px;}
+.pd-features{margin:0 0 24px;padding-left:18px;color:#4a443d;font-size:14px;line-height:1.9;}
+
+.pd-qty-row{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.pd-qty-label{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--cl-muted,#7a6f65);}
+.pd-qty{display:inline-flex;align-items:center;border:1px solid var(--cl-border,#eae2d6);border-radius:3px;}
+.pd-qty button{
+  width:38px;height:40px;background:none;border:0;font-size:18px;cursor:pointer;color:#1a1a1a;
+}
+.pd-qty span{min-width:38px;text-align:center;font-size:15px;}
+
+.pd-actions{display:flex;flex-wrap:wrap;gap:12px;}
+.pd-btn{
+  border:0;cursor:pointer;font-family:inherit;font-size:13px;letter-spacing:1.6px;
+  text-transform:uppercase;padding:16px 30px;border-radius:3px;transition:.2s;
+}
+.pd-btn-gold{background:#13110d;color:#f4e2b8;}
+.pd-btn-gold:hover{background:#2a2419;}
+.pd-btn-gold:disabled{opacity:.45;cursor:not-allowed;}
+.pd-btn-outline{background:#fff;color:#1a1a1a;border:1px solid #1a1a1a;}
+.pd-btn-outline:hover{background:#13110d;color:#f4e2b8;}
+
+.pd-meta{margin-top:26px;border-top:1px solid var(--cl-border,#eae2d6);padding-top:18px;
+  font-size:13px;color:var(--cl-muted,#7a6f65);line-height:2;}
+
+.pd-related{margin-top:76px;}
+.pd-related-title{
+  text-align:center;font-family:Montserrat, Georgia, serif;font-weight:800;
+  font-size:clamp(20px,3vw,28px);letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;
+}
+.pd-related .cl-card{cursor:pointer;}
+
+@media (max-width:860px){
+  .pd-wrap{grid-template-columns:1fr;gap:26px;}
+  .pd-actions .pd-btn{flex:1 1 100%;}
+}
+
+/* Custom name input (Customized Name products) */
+.pd-custom-input {
+  flex: 1;
+  max-width: 260px;
+  padding: 10px 14px;
+  border: 1px solid #d8cfc0;
+  border-radius: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  letter-spacing: .05em;
+  outline: none;
+  transition: border-color .25s, box-shadow .25s;
+}
+.pd-custom-input:focus {
+  border-color: #c9a35c;
+  box-shadow: 0 0 0 3px rgba(201, 163, 92, 0.15);
+}
+.pd-custom-input.pd-custom-error {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+}

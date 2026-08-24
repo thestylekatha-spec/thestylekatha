@@ -467,7 +467,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="collections reveal" id="collections">
+      <section className="collections" id="collections">
         <h2>Our Collections</h2>
         <div className="collections-track">
           {categories.map(c => (
@@ -491,7 +491,7 @@ export default function Home() {
             cards += `<a class="product-card" href="/product?id=${encodeURIComponent(p.id)}"><div class="thumb"><img alt="${(p.name || '').replace(/"/g, '&quot;')}" src="${(p.image_url || '').replace(/"/g, '&quot;')}" loading="lazy"/></div><div class="name">${(p.name || '').replace(/</g, '&lt;')}</div><div class="price">${money(p.price)}</div></a>`;
           }
           return (
-            <section key={cat.id} className="ak-hero reveal">
+            <section key={cat.id} className="ak-hero">
               <h1>{title}</h1>
               <a className="shop-now" href={href}>Shop Now</a>
               <section className="product-section">
@@ -502,6 +502,25 @@ export default function Home() {
             </section>
           );
         })}
+        {!categories.length && !products.length && !dataError && (
+          <div style={{textAlign:'center',padding:'40px 20px',color:'#7a6f65',fontSize:14}}>Loading products\u2026</div>
+        )}
+        {!categories.length && products.length > 0 && (
+          <section className="ak-hero">
+            <h1>ALL PRODUCTS</h1>
+            <section className="product-section">
+              <div className="marquee-wrap">
+                <div className="product-track" dangerouslySetInnerHTML={{
+                  __html: products.filter(p => p.image_url).map(p =>
+                    `<a class="product-card" href="/product?id=${encodeURIComponent(p.id)}"><div class="thumb"><img alt="${(p.name||'').replace(/"/g,'&quot;')}" src="${(p.image_url||'').replace(/"/g,'&quot;')}" loading="lazy"/></div><div class="name">${(p.name||'').replace(/</g,'&lt;')}</div><div class="price">${money(p.price)}</div></a>`
+                  ).join('') + products.filter(p => p.image_url).map(p =>
+                    `<a class="product-card" href="/product?id=${encodeURIComponent(p.id)}"><div class="thumb"><img alt="${(p.name||'').replace(/"/g,'&quot;')}" src="${(p.image_url||'').replace(/"/g,'&quot;')}" loading="lazy"/></div><div class="name">${(p.name||'').replace(/</g,'&lt;')}</div><div class="price">${money(p.price)}</div></a>`
+                  ).join('')
+                }} />
+              </div>
+            </section>
+          </section>
+        )}
       </div>
 
       <section className="usp reveal">

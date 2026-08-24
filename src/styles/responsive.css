@@ -1,51 +1,14 @@
 /* ========================================
-   Responsive Breakpoints
+   Responsive — grid breakpoints only
+   All section-specific rules are in mobile.css
    ======================================== */
 
 /* Tablet */
 @media (max-width: 900px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
-  .hero h1 { font-size: 48px; }
 }
 
 /* Mobile */
 @media (max-width: 520px) {
   .grid { grid-template-columns: 1fr; }
-  .hero-ctas { flex-direction: column; }
-  .hero { min-height: 70vh; padding: 50px 16px 80px; }
-  .hero h1 { font-size: 36px; }
-  .hero p.sub { font-size: 14px; }
-  .stage { width: 220px; height: 180px; margin-top: 32px; }
-  .ring-wrap { width: 140px; height: 140px; top: 8px; }
-  .ring-photo { width: 140px; height: 140px; }
-  .dots { margin-top: 24px; }
-  .usp { padding: 50px 16px 40px; }
-  .usp h2 { font-size: 28px; }
-  .usp-grid { gap: 24px; }
-  .usp-icon { width: 56px; height: 56px; }
-  .usp-icon svg { width: 22px; height: 22px; }
-  .products { padding: 50px 16px 60px; }
-  .products-head { flex-direction: column; gap: 12px; text-align: center; }
-  .products-head h2 { font-size: 28px; }
-  .products-head p { font-size: 13px; max-width: 100%; }
-  .card-body { padding: 14px 14px 16px; }
-  .band { padding: 50px 16px; }
-  .band h2 { font-size: 28px; }
-  footer { padding: 40px 16px 20px; }
-  .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
-  .stats { gap: 32px; padding: 0 16px 50px; }
-  .stat .num { font-size: 36px; }
-  .category-filter { gap: 8px; }
-  .cat-btn { padding: 6px 12px !important; font-size: 11px !important; }
-  .recently-viewed { padding: 40px 16px; }
-  .recently-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-}
-
-/* Small mobile */
-@media (max-width: 360px) {
-  .stat .num { font-size: 30px; }
-  .stat .label { font-size: 11px; }
-  .hero p.sub { font-size: 13px; }
-  .usp h2 { font-size: 24px; }
-  .band h2 { font-size: 24px; }
 }

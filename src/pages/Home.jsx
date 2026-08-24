@@ -128,6 +128,7 @@ export default function Home() {
   const [statValues, setStatValues] = useState([0, 0, 0, 0]);
 
   const [featuredProducts, setFeaturedProducts] = useState({});
+  const [dataError, setDataError] = useState(null);
 
   const touchMarqueeRef = useRef(null);
 
@@ -190,14 +191,16 @@ export default function Home() {
         const res = await supabase.from('categories').select('*').eq('is_active', true).order('sort_order', { ascending: true });
         if (res.error) {
           console.warn('Categories query error:', res.error.message);
+          setDataError('Categories: ' + res.error.message);
           const fallback = await supabase.from('categories').select('*').order('sort_order', { ascending: true });
-          if (!fallback.error && fallback.data) setCategories(fallback.data);
-          else console.warn('Categories fallback error:', fallback.error?.message);
+          if (!fallback.error && fallback.data) { setCategories(fallback.data); setDataError(null); }
+          else { console.warn('Categories fallback error:', fallback.error?.message); }
         } else if (res.data) {
           setCategories(res.data);
         }
       } catch (e) {
         console.warn('Could not load categories:', e);
+        setDataError('Categories: ' + e.message);
       }
     }
     load();
@@ -209,14 +212,17 @@ export default function Home() {
         const res = await supabase.from('products').select('*').order('created_at', { ascending: true });
         if (res.error) {
           console.warn('Products query error:', res.error.message);
+          setDataError(prev => prev ? prev + ' | Products: ' + res.error.message : 'Products: ' + res.error.message);
         }
         if (res.data && res.data.length) {
           setProducts(res.data);
+          setDataError(null);
         } else if (!res.error) {
           console.warn('Products table returned empty');
         }
       } catch (e) {
         console.warn('Could not load products:', e);
+        setDataError('Products: ' + e.message);
       }
     }
     load();
@@ -389,6 +395,12 @@ export default function Home() {
   return (
     <>
       <a href="#featuredCategories" className="skip-link">Skip to collection</a>
+
+      {dataError && (
+        <div style={{ background: '#c0564a', color: '#fff', padding: '10px 20px', fontSize: 13, textAlign: 'center', zIndex: 9999, position: 'relative' }}>
+          Data error: {dataError} — Check browser console (F12) for details
+        </div>
+      )}
 
       <header>
         <nav>

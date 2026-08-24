@@ -4,37 +4,14 @@
 
 /* Tablet */
 @media (max-width: 900px) {
-  nav { padding: 14px 20px; }
-  .usp-grid { grid-template-columns: 1fr; gap: 36px; }
   .grid { grid-template-columns: repeat(2, 1fr); }
-  .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
   .hero h1 { font-size: 48px; }
-  .stage { width: 280px; height: 220px; }
-  .ring-wrap { width: 180px; height: 180px; }
-  .ring-photo { width: 180px; height: 180px; }
-  .logo-mark { height: 55px; }
-  .logo-sub { font-size: 8px; }
-  .nav-contact-btn span { display: none; }
-  .nav-contact-btn { padding: 10px; }
 }
 
 /* Mobile */
 @media (max-width: 520px) {
-  nav { padding: 12px 14px; gap: 10px; }
-  .logo-mark { height: 45px; }
-  .logo-sub { font-size: 5px; letter-spacing: 0.8px; }
-  .logo-brand { font-size: 16px; }
   .grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
   .hero-ctas { flex-direction: column; }
-  .nav-icons { gap: 10px; }
-  .nav-contact-btn span { display: none; }
-  .nav-contact-btn { padding: 10px; }
-  .nav-contact-btn svg { width: 28px; height: 28px; }
-  .nav-contact .contact-dropdown { right: -8px; min-width: 180px; }
-  .nav-cart-btn { order: -1; padding: 10px 14px 10px 10px; gap: 6px; }
-  .nav-cart-label { font-size: 11px; }
-  .cart-count { min-width: 18px; height: 18px; font-size: 9px; padding: 0 5px; }
   .hero { min-height: 70vh; padding: 50px 16px 80px; }
   .hero h1 { font-size: 36px; }
   .hero p.sub { font-size: 14px; }
@@ -50,55 +27,22 @@
   .products { padding: 50px 16px 60px; }
   .products-head { flex-direction: column; gap: 12px; text-align: center; }
   .products-head h2 { font-size: 28px; }
-  .products-head p { font-size: 13px; max-width: 100%; color: rgba(245,239,226,0.55); }
+  .products-head p { font-size: 13px; max-width: 100%; }
   .card-body { padding: 14px 14px 16px; }
   .band { padding: 50px 16px; }
   .band h2 { font-size: 28px; }
   footer { padding: 40px 16px 20px; }
   .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
-  .cart-modal-body { max-height: 96vh; border-radius: 12px; }
-  .cart-items { max-height: 30vh; padding: 6px 18px; }
-  .cart-head { padding: 16px 18px 14px; }
-  .cart-foot { padding: 14px 18px 18px; }
-  .cart-item { flex-wrap: wrap; gap: 8px; }
-  .cart-item-media { width: 48px; height: 48px; }
-  .cart-item-right { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
-  .cart-item-qty { order: 3; }
   .stats { gap: 32px; padding: 0 16px 50px; }
   .stat .num { font-size: 36px; }
   .category-filter { gap: 8px; }
   .cat-btn { padding: 6px 12px !important; font-size: 11px !important; }
   .recently-viewed { padding: 40px 16px; }
   .recently-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .search-panel { padding: 14px; }
-  .section { padding-left: 16px; padding-right: 16px; }
-  .collections { padding: 48px 0 20px; }
-  .collections-row { gap: 18px 14px; padding: 0 16px; }
-  .col-card { width: calc(33.333% - 10px); min-width: 90px; }
-  .col-card span { font-size: 10.5px; letter-spacing: 0.08em; }
-  .category-filter { flex-wrap: wrap; justify-content: center; }
-  .collections-head h2 { font-size: 28px; }
-  .collections-head p { font-size: 13px; }
-  .collections-head { margin-bottom: 28px; }
-  .eyebrow { font-size: 10px; letter-spacing: 0.2em; }
-  .sg-content { margin: 10px; max-height: 90vh; overflow-y: auto; }
-  .sg-table { font-size: 12px; }
-  .sg-table th, .sg-table td { padding: 6px 8px; }
-  .qv-content { width: 95vw; max-height: 90vh; }
 }
 
 /* Small mobile */
 @media (max-width: 360px) {
-  nav { padding: 10px 12px; gap: 8px; }
-  .logo-mark { height: 40px; }
-  .logo-text { display: none; }
-  .hero h1 { font-size: 30px; }
-  .btn { padding: 12px 20px; font-size: 11px; }
-  .nav-cart-label { display: none; }
-  .nav-cart-btn { padding: 8px; }
-  .collections-row { gap: 12px 10px; }
-  .col-card { width: calc(33.333% - 8px); min-width: 80px; }
-  .col-card .circle { border-width: 1px; }
   .stat .num { font-size: 30px; }
   .stat .label { font-size: 11px; }
   .hero p.sub { font-size: 13px; }

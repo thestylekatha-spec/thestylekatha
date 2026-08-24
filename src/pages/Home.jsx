@@ -9,13 +9,10 @@ import '../styles/hero.css';
 import '../styles/buttons.css';
 import '../styles/ring-showcase.css';
 import '../styles/usp.css';
-import '../styles/products.css';
-import '../styles/band.css';
 import '../styles/footer.css';
 import '../styles/animations.css';
 import '../styles/search.css';
 import '../styles/cart.css';
-import '../styles/modal.css';
 import '../styles/toast.css';
 import '../styles/back-to-top.css';
 import '../styles/quick-view.css';
@@ -129,8 +126,6 @@ export default function Home() {
 
   const [featuredProducts, setFeaturedProducts] = useState({});
   const [dataError, setDataError] = useState(null);
-
-  const touchMarqueeRef = useRef(null);
 
   const RING_IMAGES = ['/assets/ring-1.png', '/assets/ring-2.png', '/assets/ring-3.png'];
   const RING_ALTS = ['1gm gold ring', '1gm gold band ring', '1gm gold statement ring'];
@@ -486,53 +481,22 @@ export default function Home() {
 
       <div className="ak">
         <div id="featuredCategories"></div>
-        {categories.map((cat, idx) => {
+        {categories.map((cat) => {
           const catProds = featuredProducts[cat.id];
           if (!catProds || !catProds.length) return null;
           const href = `/collection?slug=${cat.slug || cat.id}`;
           const title = (cat.name || '').toUpperCase();
-          const cardW = typeof window !== 'undefined' && window.innerWidth < 640 ? 180 : 276;
-          const vw = typeof window !== 'undefined' ? window.innerWidth : 1200;
-          const repeats = Math.max(1, Math.ceil(vw / Math.max(1, catProds.length * cardW)));
           let cards = '';
-          for (let r = 0; r < repeats; r++) {
-            for (const p of catProds) {
-              cards += `<a class="product-card" href="/product?id=${encodeURIComponent(p.id)}"><div class="thumb"><img alt="${(p.name || '').replace(/"/g, '&quot;')}" src="${(p.image_url || '').replace(/"/g, '&quot;')}" loading="lazy"/></div><div class="name">${(p.name || '').replace(/</g, '&lt;')}</div><div class="price">${money(p.price)}</div></a>`;
-            }
+          for (const p of catProds) {
+            cards += `<a class="product-card" href="/product?id=${encodeURIComponent(p.id)}"><div class="thumb"><img alt="${(p.name || '').replace(/"/g, '&quot;')}" src="${(p.image_url || '').replace(/"/g, '&quot;')}" loading="lazy"/></div><div class="name">${(p.name || '').replace(/</g, '&lt;')}</div><div class="price">${money(p.price)}</div></a>`;
           }
           return (
-            <section key={cat.id} className={`ak-hero reveal ${idx > 0 ? '' : ''}`}>
+            <section key={cat.id} className="ak-hero reveal">
               <h1>{title}</h1>
               <a className="shop-now" href={href}>Shop Now</a>
               <section className="product-section">
-                <div className="marquee-wrap" ref={el => {
-                  if (el && !el.dataset.mqInit) {
-                    el.dataset.mqInit = '1';
-                    const track = el.querySelector('.product-track');
-                    if (track) {
-                      track.style.willChange = 'transform';
-                      let offset = 0;
-                      let dragging = false;
-                      let lastX = 0;
-                      let moved = 0;
-                      const SPEED = 70;
-                      const dir = idx % 2 === 0 ? 1 : -1;
-                      function apply() { track.style.transform = `translate3d(${-offset}px,0,0)`; }
-                      function loop(now) {
-                        if (!dragging) offset += (dir * SPEED * 16) / 1000;
-                        const pw = track.scrollWidth / 2;
-                        if (pw > 0) offset = ((offset % pw) + pw) % pw;
-                        apply();
-                        requestAnimationFrame(loop);
-                      }
-                      requestAnimationFrame(loop);
-                      el.addEventListener('touchstart', () => el.classList.add('is-paused'), { passive: true });
-                      el.addEventListener('touchend', () => setTimeout(() => el.classList.remove('is-paused'), 1200), { passive: true });
-                    }
-                  }
-                }}>
-                  <div className="product-track" dangerouslySetInnerHTML={{ __html: cards }} />
-                  <div className="product-track" dangerouslySetInnerHTML={{ __html: cards }} aria-hidden="true" />
+                <div className="marquee-wrap">
+                  <div className="product-track" dangerouslySetInnerHTML={{ __html: cards + cards }} />
                 </div>
               </section>
             </section>

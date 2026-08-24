@@ -107,7 +107,7 @@ export default function Collection() {
            sorted.map(p => {
             const soldOut = p.is_active === false;
             return (
-              <a key={p.id} className="cl-card" href={`/product.html?id=${p.id}`}>
+              <a key={p.id} className="cl-card" href={`/product?id=${p.id}`}>
                 <div className="cl-media">
                   {soldOut ? <span className="cl-tag">Out of Stock</span> : p.badge ? <span className="cl-tag sale">{p.badge}</span> : null}
                   <img src={p.image_url} alt={p.name} loading="lazy" onError={e => { e.target.src = '/assets/collections/ring.jpg'; }} />

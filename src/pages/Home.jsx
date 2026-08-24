@@ -342,6 +342,28 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const t = setTimeout(() => {
+      document.body.classList.add('page-ready');
+    }, 400);
+    return () => { clearTimeout(t); document.body.classList.remove('page-ready'); };
+  }, []);
+
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal, .reveal-scale, .reveal-stagger');
+    if (!els.length) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, [categories, products]);
+
+  useEffect(() => {
     if (cartOpen || searchOpen || quickView || sizeGuideOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -520,7 +542,7 @@ export default function Home() {
         <div className="stats" ref={statsRef}>
           {STAT_CONFIG.map((s, i) => (
             <div className="stat reveal-scale" key={i}>
-              <div className="num">{statValues[i]}</div>
+              <div className="num">{statValues[i]}{s.suffix}</div>
               <div className="label">{s.label}</div>
             </div>
           ))}

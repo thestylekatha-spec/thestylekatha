@@ -106,7 +106,7 @@ export default function Product() {
         <nav className="cl-crumb" aria-label="Breadcrumb">
           <a href="/">Home</a>
           <span className="cl-dot">•</span>
-          <a href={catSlug ? `/collection.html?slug=${catSlug}` : '/'}>{catName || 'Collection'}</a>
+          <a href={catSlug ? `/collection?slug=${catSlug}` : '/'}>{catName || 'Collection'}</a>
           <span className="cl-dot">•</span>
           <span>{product.name}</span>
         </nav>
@@ -153,7 +153,7 @@ export default function Product() {
             <h2 className="pd-related-title">You may also like</h2>
             <div className="cl-grid">
               {related.map(p => (
-                <a key={p.id} className="cl-card" href={`/product.html?id=${p.id}`}>
+                <a key={p.id} className="cl-card" href={`/product?id=${p.id}`}>
                   <div className="cl-media">
                     {p.is_active === false ? <span className="cl-tag">Out of Stock</span> : null}
                     <img src={p.image_url} alt={p.name} loading="lazy" onError={e => { e.target.src = '/assets/collections/ring.jpg'; }} />

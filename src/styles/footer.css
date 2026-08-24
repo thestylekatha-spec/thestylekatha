@@ -10,7 +10,7 @@ footer {
   contain: layout;
 }
 
-.foot-grid {
+.footer-grid {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -21,18 +21,18 @@ footer {
   text-align: center;
 }
 
-.foot-col { min-width: 160px; }
+.footer-grid > div { min-width: 160px; }
 
-.foot-grid .logo { margin-bottom: 16px; justify-content: center; }
+.footer-grid .logo { margin-bottom: 16px; justify-content: center; }
 
-.foot-grid p {
+.footer-grid p {
   font-size: 13px;
   line-height: 1.7;
   max-width: 280px;
   margin: 0 auto;
 }
 
-.foot-col h4 {
+.footer-grid h4 {
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -41,16 +41,16 @@ footer {
   font-weight: 500;
 }
 
-.foot-col a {
+.footer-grid a {
   display: block;
   font-size: 13px;
   margin-bottom: 10px;
   opacity: 0.75;
 }
 
-.foot-col a:hover { opacity: 1; color: var(--gold-soft); }
+.footer-grid a:hover { opacity: 1; color: var(--gold-soft); }
 
-.foot-bottom {
+.footer-bottom {
   max-width: 1200px;
   margin: 0 auto;
   border-top: 1px solid rgba(245,239,226,0.1);

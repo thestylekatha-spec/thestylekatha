@@ -183,80 +183,46 @@ export default function Home() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await supabase.from('categories').select('*').eq('is_active', true).order('sort_order', { ascending: true });
-        if (res.error) {
-          console.warn('Categories query error:', res.error.message);
-          setDataError('Categories: ' + res.error.message);
+        const [catRes, prodRes] = await Promise.all([
+          supabase.from('categories').select('*').eq('is_active', true).order('sort_order', { ascending: true }),
+          supabase.from('products').select('id, name, price, old_price, badge, badge_alt, image_url, is_active, in_stock, category, category_id, description, features, slug, customisable, size_guide_title, size_guide, care, shipping, sku')
+        ]);
+        if (catRes.error) {
+          console.warn('Categories query error:', catRes.error.message);
           const fallback = await supabase.from('categories').select('*').order('sort_order', { ascending: true });
-          if (!fallback.error && fallback.data) { setCategories(fallback.data); setDataError(null); }
-          else { console.warn('Categories fallback error:', fallback.error?.message); }
-        } else if (res.data) {
-          setCategories(res.data);
+          if (!fallback.error && fallback.data) setCategories(fallback.data);
+        } else if (catRes.data) {
+          setCategories(catRes.data);
         }
-      } catch (e) {
-        console.warn('Could not load categories:', e);
-        setDataError('Categories: ' + e.message);
-      }
-    }
-    load();
-  }, []);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await supabase.from('products').select('*').order('created_at', { ascending: true });
-        if (res.error) {
-          console.warn('Products query error:', res.error.message);
-          setDataError(prev => prev ? prev + ' | Products: ' + res.error.message : 'Products: ' + res.error.message);
-        }
-        if (res.data && res.data.length) {
-          setProducts(res.data);
+        if (prodRes.error) {
+          console.warn('Products query error:', prodRes.error.message);
+          setDataError('Products: ' + prodRes.error.message);
+        } else if (prodRes.data && prodRes.data.length) {
+          setProducts(prodRes.data);
           setDataError(null);
-        } else if (!res.error) {
+        } else if (!prodRes.error) {
           console.warn('Products table returned empty');
         }
       } catch (e) {
-        console.warn('Could not load products:', e);
-        setDataError('Products: ' + e.message);
+        console.warn('Could not load data:', e);
+        setDataError('Load error: ' + e.message);
       }
     }
     load();
   }, []);
 
   useEffect(() => {
-    async function load() {
-      const catProds = {};
-      for (const cat of categories) {
-        let prods = [];
-        try {
-          const res = await supabase
-            .from('products')
-            .select('id, name, price, old_price, badge, badge_alt, image_url, is_active, in_stock, category, category_id')
-            .eq('category_id', cat.id)
-            .order('created_at', { ascending: false })
-            .limit(20);
-          prods = res.error ? [] : (res.data || []);
-        } catch (e) {
-          console.warn('Featured rows: could not load products for', cat.name, e);
-        }
-        if (!prods.length) {
-          try {
-            const alt = await supabase
-              .from('products')
-              .select('id, name, price, old_price, badge, badge_alt, image_url, is_active, in_stock, category, category_id')
-              .ilike('category', cat.name)
-              .order('created_at', { ascending: false })
-              .limit(20);
-            if (!alt.error) prods = alt.data || [];
-          } catch (e) {}
-        }
-        prods = prods.filter(p => p && p.image_url);
-        if (prods.length) catProds[cat.id] = prods;
+    if (!categories.length || !products.length) return;
+    const catProds = {};
+    for (const cat of categories) {
+      let prods = products.filter(p => p.category_id === cat.id && p.image_url);
+      if (!prods.length) {
+        prods = products.filter(p => (p.category || '').toLowerCase() === cat.name.toLowerCase() && p.image_url);
       }
-      setFeaturedProducts(catProds);
+      if (prods.length) catProds[cat.id] = prods.slice(0, 20);
     }
-    if (categories.length) load();
-  }, [categories]);
+    setFeaturedProducts(catProds);
+  }, [categories, products]);
 
   useEffect(() => {
     const interval = setInterval(() => {

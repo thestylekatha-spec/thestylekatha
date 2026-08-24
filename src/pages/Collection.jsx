@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { money } from '../lib/utils';
+import { money, generateOrderId } from '../lib/utils';
 import { cartStore } from '../lib/cartStore';
 import '../styles/base.css';
 import '../styles/nav.css';
 import '../styles/footer.css';
 import '../styles/toast.css';
 import '../styles/collections.css';
+import '../styles/collection.css';
 import '../styles/aunty.css';
 
 export default function Collection() {
@@ -18,6 +19,7 @@ export default function Collection() {
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState('featured');
   const [loading, setLoading] = useState(true);
+  const [cartCount, setCartCount] = useState(cartStore.count());
 
   useEffect(() => {
     async function load() {
@@ -73,9 +75,9 @@ export default function Collection() {
           </a>
           <div className="nav-icons">
             <a className="cl-nav-link" href="/">Home</a>
-            <a className="pd-bag-link" href="/#cart" aria-label="Bag">
+            <a className="pd-bag-link" href="/" onClick={e => { e.preventDefault(); window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'}); }} aria-label="Bag">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" width="22" height="22"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
-              <span className="pd-bag-count" data-bag-count>{cartStore.count()}</span>
+              <span className="pd-bag-count" data-bag-count>{cartCount}</span>
             </a>
           </div>
         </nav>

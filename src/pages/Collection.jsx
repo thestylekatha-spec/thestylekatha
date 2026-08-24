@@ -23,24 +23,23 @@ export default function Collection() {
     async function load() {
       setLoading(true);
       try {
-        // Load category
         const q = supabase.from('categories').select('id, name, slug, description');
         const catRes = slug ? await q.eq('slug', slug).limit(1) : await q.eq('id', catId).limit(1);
+        if (catRes.error) console.warn('Category query error:', catRes.error.message);
         const cat = (catRes.data || [])[0];
         if (cat) {
           setCategory(cat);
           document.title = cat.name + ' — The Style Katha';
-          // Load products
           let pr = await supabase.from('products')
             .select('id, name, price, old_price, badge, image_url, is_active, category_id')
             .eq('category_id', cat.id).order('created_at', { ascending: true });
+          if (pr.error) console.warn('Products query error:', pr.error.message);
           let list = pr.data || [];
-          // Fallback by name
           if (!list.length) {
             const alt = await supabase.from('products')
               .select('id, name, price, old_price, badge, image_url, is_active, category')
               .ilike('category', cat.name).order('created_at', { ascending: true });
-            list = alt.data || [];
+            if (!alt.error) list = alt.data || [];
           }
           setProducts(list);
         }

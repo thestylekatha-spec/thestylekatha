@@ -187,8 +187,15 @@ export default function Home() {
   useEffect(() => {
     async function load() {
       try {
-        const { data: cats } = await supabase.from('categories').select('*').eq('is_active', true).order('sort_order', { ascending: true });
-        if (cats) setCategories(cats);
+        const res = await supabase.from('categories').select('*').eq('is_active', true).order('sort_order', { ascending: true });
+        if (res.error) {
+          console.warn('Categories query error:', res.error.message);
+          const fallback = await supabase.from('categories').select('*').order('sort_order', { ascending: true });
+          if (!fallback.error && fallback.data) setCategories(fallback.data);
+          else console.warn('Categories fallback error:', fallback.error?.message);
+        } else if (res.data) {
+          setCategories(res.data);
+        }
       } catch (e) {
         console.warn('Could not load categories:', e);
       }
@@ -199,8 +206,15 @@ export default function Home() {
   useEffect(() => {
     async function load() {
       try {
-        const { data: prods } = await supabase.from('products').select('*').order('created_at', { ascending: true });
-        if (prods) setProducts(prods);
+        const res = await supabase.from('products').select('*').order('created_at', { ascending: true });
+        if (res.error) {
+          console.warn('Products query error:', res.error.message);
+        }
+        if (res.data && res.data.length) {
+          setProducts(res.data);
+        } else if (!res.error) {
+          console.warn('Products table returned empty');
+        }
       } catch (e) {
         console.warn('Could not load products:', e);
       }
@@ -218,8 +232,6 @@ export default function Home() {
             .from('products')
             .select('id, name, price, old_price, badge, badge_alt, image_url, is_active, in_stock, category, category_id')
             .eq('category_id', cat.id)
-            .eq('is_active', true)
-            .eq('in_stock', true)
             .order('created_at', { ascending: false })
             .limit(20);
           prods = res.error ? [] : (res.data || []);
@@ -232,8 +244,6 @@ export default function Home() {
               .from('products')
               .select('id, name, price, old_price, badge, badge_alt, image_url, is_active, in_stock, category, category_id')
               .ilike('category', cat.name)
-              .eq('is_active', true)
-              .eq('in_stock', true)
               .order('created_at', { ascending: false })
               .limit(20);
             if (!alt.error) prods = alt.data || [];

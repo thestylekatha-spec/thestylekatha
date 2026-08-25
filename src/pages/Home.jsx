@@ -599,7 +599,7 @@ export default function Home() {
             </div>
             <div>
               <h4>Collection</h4>
-              <ul>
+              <ul className="footer-collections">
                 {categories.length
                   ? categories.map(c => (
                     <li key={c.id}><a href={`/collection?slug=${c.slug || c.id}`}>{c.name}</a></li>
@@ -610,7 +610,9 @@ export default function Home() {
             </div>
             <div>
               <h4>Follow Us</h4>
-              <ul><li><a href="https://www.instagram.com/thestylekatha" target="_blank" rel="noopener">Instagram</a></li></ul>
+              <ul className="footer-social">
+                <li><a href="https://www.instagram.com/thestylekatha" target="_blank" rel="noopener">Instagram</a></li>
+              </ul>
             </div>
           </div>
           <div className="footer-bottom">

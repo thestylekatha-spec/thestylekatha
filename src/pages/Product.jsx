@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { money } from '../lib/utils';
 import { cartStore } from '../lib/cartStore';
@@ -19,6 +19,7 @@ const DEFAULT_FEATURES = [
 
 export default function Product() {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const productId = params.get('id') || '';
   const [product, setProduct] = useState(null);
   const [catName, setCatName] = useState('');
@@ -76,6 +77,11 @@ export default function Product() {
     setTimeout(() => setToast(null), 3200);
   }
 
+  function goToCart() {
+    sessionStorage.setItem('openCart', '1');
+    navigate('/');
+  }
+
   if (loading) return <div className="cl-page pd-page"><main className="cl-main pd-main"><div className="cl-loading">Loading product…</div></main></div>;
   if (!product) return <div className="cl-page pd-page"><main className="cl-main pd-main"><div className="cl-empty">This product could not be found.</div></main></div>;
 
@@ -97,7 +103,7 @@ export default function Product() {
           </a>
           <div className="nav-icons">
             <a className="cl-nav-link" href="/">Home</a>
-            <a className="pd-bag-link" href="/" onClick={e => { e.preventDefault(); window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'}); }} aria-label="Bag">
+            <a className="pd-bag-link" href="/" onClick={e => { e.preventDefault(); goToCart(); }} aria-label="Bag">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" width="22" height="22"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
               <span className="pd-bag-count" data-bag-count>{cartCount}</span>
             </a>
@@ -145,7 +151,7 @@ export default function Product() {
             </div>
             <div className="pd-actions">
               <button className="pd-btn pd-btn-gold" disabled={soldOut} onClick={handleAddToBag}>{soldOut ? 'Sold Out' : 'Add to Bag'}</button>
-              <a className="pd-btn pd-btn-outline" href="/" onClick={e => { e.preventDefault(); window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'}); }}>View Bag</a>
+              <a className="pd-btn pd-btn-outline" href="/" onClick={e => { e.preventDefault(); goToCart(); }}>View Bag</a>
             </div>
             <div className="pd-meta">Free shipping on prepaid orders · Easy 3-day returns · Cash on delivery available</div>
           </div>

@@ -348,6 +348,13 @@ export default function Home() {
     }
   }, [cartOpen, searchOpen, quickView, sizeGuideOpen]);
 
+  useEffect(() => {
+    if (sessionStorage.getItem('openCart')) {
+      sessionStorage.removeItem('openCart');
+      setCartOpen(true);
+    }
+  }, []);
+
   function handleAddToCartFromQv(product) {
     addToCart(product);
     setQuickView(null);
@@ -408,7 +415,7 @@ export default function Home() {
         <p className="sub hero-in">1gm gold look, everyday price \u2014 each piece crafted with care and finished by hand, so you can wear style every day, not just on occasions.</p>
         <div className="hero-ctas hero-in">
           <a href="#featuredCategories" className="btn btn-gold">Explore the Collection</a>
-          <a href="#" className="btn btn-outline">Our Craft</a>
+          <a href="#usp" className="btn btn-outline" onClick={e => { e.preventDefault(); document.querySelector('.usp')?.scrollIntoView({ behavior: 'smooth' }); }}>Our Craft</a>
         </div>
         <div className="stage hero-in">
           <div className="pedestal"></div>
@@ -606,7 +613,7 @@ export default function Home() {
                   ? categories.map(c => (
                     <li key={c.id}><a href={`/collection?slug=${c.slug || c.id}`}>{c.name}</a></li>
                   ))
-                  : <li><a href="#">Loading\u2026</a></li>
+                  : <li><span style={{color:'#999',fontSize:13}}>Loading\u2026</span></li>
                 }
               </ul>
             </div>

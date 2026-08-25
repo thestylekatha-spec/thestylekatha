@@ -154,6 +154,7 @@
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
   padding-bottom:8px;
+  touch-action:pan-x;
 }
 .ak .testimonial-grid::-webkit-scrollbar{display:none;}
 .ak .t-card{
@@ -164,6 +165,7 @@
   min-width:calc(50% - 10px);
   flex:0 0 calc(50% - 10px);
   scroll-snap-align:start;
+  flex-shrink:0;
   transition:transform .2s,box-shadow .2s;
 }
 a.t-card:hover{
@@ -262,6 +264,7 @@ a.t-card:hover{
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
   padding-bottom:8px;
+  touch-action:pan-x;
 }
 .ak .insta-grid::-webkit-scrollbar{display:none;}
 .ak .insta-grid > * {

@@ -351,8 +351,6 @@ export default function Home() {
 
   return (
     <>
-      <a href="#featuredCategories" className="skip-link">Skip to collection</a>
-
       {dataError && (
         <div style={{ background: '#c0564a', color: '#fff', padding: '10px 20px', fontSize: 13, textAlign: 'center', zIndex: 9999, position: 'relative' }}>
           Data error: {dataError} — Check browser console (F12) for details

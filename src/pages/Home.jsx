@@ -589,16 +589,13 @@ export default function Home() {
 
         <footer>
           <div className="footer-grid">
-            <div>
-              <div className="logo footer-logo">
-                <img src="/assets/logo.png" alt="The Style Katha" className="logo-mark" />
-                <div className="logo-text">
-                  <span className="logo-the">THE</span>
-                  <span className="logo-brand"><em>STYLE KATHA</em></span>
-              <span className="logo-sub">JEWELLERY · CLOTHING · TIMELESS STYLE</span>
-                </div>
+            <div className="logo footer-logo">
+              <img src="/assets/logo.png" alt="The Style Katha" className="logo-mark" />
+              <div className="logo-text">
+                <span className="logo-the">THE</span>
+                <span className="logo-brand"><em>STYLE KATHA</em></span>
+                <span className="logo-sub">JEWELLERY · CLOTHING · TIMELESS STYLE</span>
               </div>
-              <p style={{ fontSize: 13, color: '#999', lineHeight: 1.6 }}>Delivering elegance, quality, and satisfaction with every order. Explore our curated range of necklaces, earrings, bangles and more.</p>
             </div>
             <div>
               <h4>Collection</h4>

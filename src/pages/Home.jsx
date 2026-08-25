@@ -447,7 +447,7 @@ export default function Home() {
 
       <div className="ak">
         <div id="featuredCategories"></div>
-        {categories.map((cat) => {
+        {categories.map((cat, idx) => {
           const catProds = featuredProducts[cat.id];
           if (!catProds || !catProds.length) return null;
           const href = `/collection?slug=${cat.slug || cat.id}`;
@@ -462,7 +462,7 @@ export default function Home() {
               <a className="shop-now" href={href}>Shop Now</a>
               <section className="product-section">
                 <div className="marquee-wrap">
-                  <div className="product-track" dangerouslySetInnerHTML={{ __html: cards + cards }} />
+                  <div className={`product-track ${idx % 2 === 1 ? 'reverse' : ''}`} dangerouslySetInnerHTML={{ __html: cards + cards }} />
                 </div>
               </section>
             </section>

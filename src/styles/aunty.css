@@ -82,6 +82,13 @@
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
 }
+@keyframes ak-marquee-reverse{
+  from{transform:translateX(-50%)}
+  to{transform:translateX(0)}
+}
+.ak .product-track.reverse{
+  animation-name:ak-marquee-reverse;
+}
 
 /* Collections — 3 per row */
 .collections{

@@ -46,6 +46,9 @@
   padding:0 20px;
   width:max-content;
   animation:ak-marquee 30s linear infinite;
+  will-change:transform;
+  transform:translateZ(0);
+  -webkit-backface-visibility:hidden;
 }
 .ak .marquee-wrap:hover .product-track{
   animation-play-state:paused;
@@ -88,6 +91,9 @@
 }
 .ak .product-track.reverse{
   animation-name:ak-marquee-reverse;
+  will-change:transform;
+  transform:translateZ(0);
+  -webkit-backface-visibility:hidden;
 }
 
 /* Collections — 3 per row */

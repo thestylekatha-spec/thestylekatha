@@ -87,7 +87,9 @@
   .ak .t-who { font-size: 13px; }
   .ak .t-stars { font-size: 12px; }
   .ak .t-quote { font-size: 13px; }
-  .ak .t-product { font-size: 11px; }
+  .ak .t-product-img { width: 36px; height: 36px; }
+  .ak .t-product-name { font-size: 11px; }
+  .ak .t-product-price { font-size: 10px; }
 
   /* Instagram */
   .ak .instagram { padding: 36px 16px; }
@@ -124,6 +126,7 @@
   .ak .t-card { min-width: calc(50% - 5px); flex: 0 0 calc(50% - 5px); padding: 12px; }
   .ak .t-avatar { width: 34px; height: 34px; }
   .ak .t-quote { font-size: 12px; }
+  .ak .t-product-img { width: 32px; height: 32px; }
 }
 
 /* --- Very small: 360px --- */

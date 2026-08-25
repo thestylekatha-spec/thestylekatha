@@ -12,7 +12,6 @@
   .ring-wrap { width: 180px; height: 180px; }
   .ring-photo { width: 180px; height: 180px; }
   .usp-grid { grid-template-columns: 1fr; gap: 36px; }
-  .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
 }
 
 /* --- Mobile: 640px --- */
@@ -98,22 +97,18 @@
   .ak .insta-grid > * { min-width: calc(50% - 2px); flex: 0 0 calc(50% - 2px); }
 
   /* Footer */
-  footer { padding: 40px 16px 20px; }
-  .footer-grid { flex-direction: column; flex-wrap: nowrap; align-items: center; gap: 24px; text-align: center; }
-  .footer-grid > div { min-width: 0; width: auto; }
-  .footer-grid .logo { justify-content: center; margin-bottom: 0; }
-  .footer-logo { flex-direction: column; align-items: center; justify-content: center; }
-  .footer-logo .logo-mark { height: 50px; width: auto; }
-  .footer-logo .logo-brand { font-size: 20px; }
-  .footer-logo .logo-the { font-size: 12px; letter-spacing: 4px; }
-  .footer-logo .logo-sub { font-size: 7px; letter-spacing: 0.8px; white-space: nowrap; }
-  .footer-links { display: flex; gap: 24px; align-items: flex-start; justify-content: center; }
-  .footer-links > div { text-align: center; }
-  .footer-grid h4 { font-size: 11px; margin-bottom: 10px; letter-spacing: 0.12em; }
-  .footer-collections { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, auto); gap: 4px 20px; justify-items: center; }
-  .footer-social { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .footer-grid a { font-size: 13px; margin-bottom: 0; }
-  .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
+  footer { padding: 36px 16px 20px; }
+  .footer-grid { gap: 24px; }
+  .footer-logo .logo-mark { height: 48px; }
+  .footer-logo .logo-brand { font-size: 19px; }
+  .footer-logo .logo-the { font-size: 11px; letter-spacing: 3px; }
+  .footer-logo .logo-sub { font-size: 7px; }
+  .footer-links { flex-direction: column; gap: 24px; align-items: center; }
+  .footer-grid h4 { font-size: 11px; margin-bottom: 8px; }
+  .footer-collections { grid-template-columns: repeat(3, auto); gap: 4px 16px; }
+  .footer-social { gap: 2px; }
+  .footer-grid a { font-size: 12px; }
+  .footer-bottom { padding-top: 16px; font-size: 10px; }
 
   /* Quick view */
   .qv-content { width: 95vw; max-height: 90vh; }

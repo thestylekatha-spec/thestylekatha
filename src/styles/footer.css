@@ -13,23 +13,31 @@ footer {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 60px;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
   padding-bottom: 40px;
   text-align: center;
 }
 
-.footer-grid > div { min-width: 160px; }
-
-.footer-grid .logo { margin-bottom: 16px; justify-content: center; }
-
-.footer-grid p {
-  font-size: 13px;
-  line-height: 1.7;
-  max-width: 280px;
-  margin: 0 auto;
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.footer-logo .logo-mark { height: 56px; }
+.footer-logo .logo-brand { font-size: 22px; }
+.footer-logo .logo-the { letter-spacing: 5px; }
+.footer-logo .logo-sub { font-size: 8px; letter-spacing: 1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }
+
+.footer-links {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+.footer-links > div { text-align: center; }
 
 .footer-grid h4 {
   font-size: 11px;
@@ -40,10 +48,29 @@ footer {
   font-weight: 500;
 }
 
+.footer-collections {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 8px 24px;
+  justify-items: center;
+}
+
+.footer-social {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
 .footer-grid a {
   display: block;
   font-size: 13px;
-  margin-bottom: 10px;
   opacity: 0.75;
 }
 
@@ -62,8 +89,3 @@ footer {
   letter-spacing: 0.04em;
   opacity: 0.55;
 }
-
-.footer-logo .logo-mark { height: 56px; }
-.footer-logo .logo-brand { font-size: 22px; }
-.footer-logo .logo-the { letter-spacing: 5px; }
-.footer-logo .logo-sub { font-size: 8px; letter-spacing: 1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }

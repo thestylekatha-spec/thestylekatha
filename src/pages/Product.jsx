@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { supabase, dbErrorMessage } from '../lib/supabase';
 import { money } from '../lib/utils';
 import { cartStore } from '../lib/cartStore';
 import '../styles/base.css';
@@ -28,6 +28,7 @@ export default function Product() {
   const [qty, setQty] = useState(1);
   const [customName, setCustomName] = useState('');
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [toast, setToast] = useState(null);
   const [cartCount, setCartCount] = useState(cartStore.count());
 
@@ -38,12 +39,17 @@ export default function Product() {
         const res = await supabase.from('products')
           .select('id, name, price, old_price, badge, image_url, is_active, description, features, category, category_id')
           .eq('id', productId).limit(1);
+        if (res.error) {
+          console.error('[Product] Query failed:', res.error);
+          setLoadError(dbErrorMessage('Product', res.error));
+          setLoading(false);
+          return;
+        }
         const p = (res.data || [])[0];
         if (!p) { setLoading(false); return; }
         setProduct(p);
         document.title = p.name + ' — The Style Katha';
 
-        // Get category name
         if (p.category_id) {
           const cr = await supabase.from('categories').select('name, slug').eq('id', p.category_id).limit(1);
           const cat = (cr.data || [])[0];
@@ -52,13 +58,15 @@ export default function Product() {
           setCatName(p.category || '');
         }
 
-        // Related products
         if (p.category_id) {
           const rel = await supabase.from('products').select('id, name, price, old_price, badge, image_url, is_active, category_id')
             .eq('category_id', p.category_id).neq('id', p.id).limit(8);
           setRelated(rel.data || []);
         }
-      } catch(e) { /* ignore */ }
+      } catch(e) {
+        console.error('[Product] Load error:', e);
+        setLoadError('Failed to load product. ' + e.message);
+      }
       setLoading(false);
     }
     load();
@@ -83,6 +91,7 @@ export default function Product() {
   }
 
   if (loading) return <div className="cl-page pd-page"><main className="cl-main pd-main"><div className="cl-loading">Loading product…</div></main></div>;
+  if (loadError) return <div className="cl-page pd-page"><main className="cl-main pd-main"><div className="cl-empty" style={{color:'#c0564a'}}>{loadError}</div></main></div>;
   if (!product) return <div className="cl-page pd-page"><main className="cl-main pd-main"><div className="cl-empty">This product could not be found.</div></main></div>;
 
   const soldOut = product.is_active === false || product.in_stock === false;

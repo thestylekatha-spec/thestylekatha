@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { SITE_CONFIG } from '../lib/supabase';
+import { dbErrorMessage } from '../lib/supabase';
 
 const PRODUCT_BUCKET = SITE_CONFIG.storage.productBucket;
 
@@ -464,7 +465,7 @@ export default function Admin() {
       if (error) throw error;
       setProducts(data || []);
     } catch (e) {
-      setListStatus({ kind: 'err', msg: e.message });
+      setListStatus({ kind: 'err', msg: dbErrorMessage('Products', e) });
     }
     setProductsLoading(false);
   };

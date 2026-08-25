@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { supabase, dbErrorMessage } from '../lib/supabase';
 import { money } from '../lib/utils';
 import { cartStore } from '../lib/cartStore';
 import '../styles/base.css';
@@ -20,6 +20,7 @@ export default function Collection() {
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState('featured');
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [cartCount, setCartCount] = useState(cartStore.count());
 
   function goToCart() {
@@ -30,6 +31,7 @@ export default function Collection() {
   useEffect(() => {
     async function load() {
       setLoading(true);
+      setLoadError(null);
       try {
         const q = supabase.from('categories').select('id, name, slug, description');
         const catRes = slug ? await q.eq('slug', slug).limit(1) : await q.eq('id', catId).limit(1);
@@ -40,16 +42,29 @@ export default function Collection() {
           let pr = await supabase.from('products')
             .select('id, name, price, old_price, badge, image_url, is_active, category_id')
             .eq('category_id', cat.id).order('created_at', { ascending: true });
+          if (pr.error) {
+            console.error('[Collection] Products query failed:', pr.error);
+            setLoadError(dbErrorMessage('Products', pr.error));
+            setLoading(false);
+            return;
+          }
           let list = pr.data || [];
           if (!list.length) {
             const alt = await supabase.from('products')
               .select('id, name, price, old_price, badge, image_url, is_active, category')
               .ilike('category', cat.name).order('created_at', { ascending: true });
-            if (!alt.error) list = alt.data || [];
+            if (alt.error) {
+              console.error('[Collection] Fallback query failed:', alt.error);
+            } else {
+              list = alt.data || [];
+            }
           }
           setProducts(list);
         }
-      } catch(e) { /* ignore */ }
+      } catch(e) {
+        console.error('[Collection] Load error:', e);
+        setLoadError('Failed to load products. ' + e.message);
+      }
       setLoading(false);
     }
     load();
@@ -108,6 +123,7 @@ export default function Collection() {
         </div>
         <div className="cl-grid">
           {loading ? <div className="cl-loading">Loading products…</div> :
+           loadError ? <div className="cl-empty" style={{color:'#c0564a'}}>{loadError}</div> :
            sorted.length === 0 ? <div className="cl-empty">No products in this collection yet.</div> :
            sorted.map(p => {
             const soldOut = p.is_active === false;

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase, SITE_CONFIG } from '../lib/supabase';
+import { supabase, SITE_CONFIG, dbErrorMessage } from '../lib/supabase';
 import { cartStore } from '../lib/cartStore';
 import { money, generateOrderId } from '../lib/utils';
 import '../styles/base.css';
@@ -189,12 +189,14 @@ export default function Home() {
           setCategories(catRes.data);
         }
         if (prodRes.error) {
-          setDataError('Products: ' + prodRes.error.message);
+          console.error('[Home] Products query failed:', prodRes.error);
+          setDataError(dbErrorMessage('Products', prodRes.error));
         } else if (prodRes.data && prodRes.data.length) {
           setProducts(prodRes.data);
           setDataError(null);
         }
       } catch (e) {
+        console.error('[Home] Load error:', e);
         setDataError('Load error: ' + e.message);
       }
     }
@@ -352,8 +354,8 @@ export default function Home() {
   return (
     <>
       {dataError && (
-        <div style={{ background: '#c0564a', color: '#fff', padding: '10px 20px', fontSize: 13, textAlign: 'center', zIndex: 9999, position: 'relative' }}>
-          Data error: {dataError} — Check browser console (F12) for details
+        <div style={{ background: '#c0564a', color: '#fff', padding: '10px 20px', fontSize: 13, textAlign: 'center', zIndex: 9999, position: 'relative', lineHeight: 1.5 }}>
+          {dataError}
         </div>
       )}
 
@@ -521,15 +523,15 @@ export default function Home() {
           <div className="testimonial-grid reveal-stagger" ref={testimonialRef}>
             {enrichedTestimonials.map((t, i) => (
               <a className="t-card" key={i} href={t.productId ? `/product?id=${t.productId}` : '#'} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="t-head">
-                  <img className="t-avatar" src={t.reviewImg} alt={t.product} />
-                  <div>
+                <img className="t-review-img" src={t.reviewImg} alt={t.product} />
+                <div className="t-body">
+                  <div className="t-head">
                     <div className="t-who">{t.who} <span className="t-verified">Verified Buyer</span></div>
                     <div className="t-stars">★★★★★</div>
                   </div>
+                  <div className="t-quote">"{t.quote}"</div>
+                  <div className="t-product">{t.product}</div>
                 </div>
-                <div className="t-quote">"{t.quote}"</div>
-                <div className="t-product">{t.product}</div>
               </a>
             ))}
           </div>

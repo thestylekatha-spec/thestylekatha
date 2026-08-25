@@ -168,28 +168,39 @@
 .ak .testimonial-grid > *{flex-shrink:0;}
 .ak .t-card{
   border:1px solid var(--border);
-  border-radius:8px;
-  padding:20px;
+  border-radius:12px;
+  overflow:hidden;
   text-align:left;
-  min-width:calc(50% - 10px);
-  flex:0 0 calc(50% - 10px);
+  min-width:calc(33.333% - 14px);
+  flex:0 0 calc(33.333% - 14px);
   scroll-snap-align:start;
   flex-shrink:0;
   transition:transform .2s,box-shadow .2s;
+  background:var(--dark-card, #1c1912);
 }
 a.t-card:hover{
   transform:translateY(-3px);
   box-shadow:0 8px 24px rgba(0,0,0,0.1);
 }
+.ak .t-review-img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  display:block;
+  background:#f5f0e8;
+}
+.ak .t-body{
+  padding:16px 20px 20px;
+}
 .ak .t-head{
   display:flex;
   align-items:center;
-  gap:12px;
-  margin-bottom:12px;
+  justify-content:space-between;
+  margin-bottom:10px;
 }
 .ak .t-avatar{
-  width:48px;
-  height:48px;
+  width:40px;
+  height:40px;
   border-radius:6px;
   object-fit:cover;
   background:#f5f0e8;

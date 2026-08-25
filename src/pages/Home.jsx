@@ -377,7 +377,7 @@ export default function Home() {
             <div className="logo-text">
               <span className="logo-the">THE</span>
               <span className="logo-brand"><em>STYLE KATHA</em></span>
-              <span className="logo-sub">JEWELLERY \u00b7 CLOTHING \u00b7 TIMELESS STYLE</span>
+                  <span className="logo-sub">JEWELLERY · CLOTHING · TIMELESS STYLE</span>
             </div>
           </a>
           <div className="nav-icons">
@@ -601,7 +601,7 @@ export default function Home() {
                 <div className="logo-text">
                   <span className="logo-the">THE</span>
                   <span className="logo-brand"><em>STYLE KATHA</em></span>
-                  <span className="logo-sub">JEWELLERY \u00b7 CLOTHING \u00b7 TIMELESS STYLE</span>
+              <span className="logo-sub">JEWELLERY · CLOTHING · TIMELESS STYLE</span>
                 </div>
               </div>
               <p style={{ fontSize: 13, color: '#999', lineHeight: 1.6 }}>Delivering elegance, quality, and satisfaction with every order. Explore our curated range of necklaces, earrings, bangles and more.</p>
@@ -766,7 +766,7 @@ export default function Home() {
                     <div className="cart-item-media"><img src={item.image} alt={item.name} /></div>
                     <div className="cart-item-info">
                       <div className="cart-item-name">{item.name}</div>
-                      <div className="cart-item-cat">{item.cat}{item.customName ? ` \u00b7 Name: ${item.customName}` : ''}</div>
+                       <div className="cart-item-cat">{item.cat}{item.customName ? ` · Name: ${item.customName}` : ''}</div>
                     </div>
                     <div className="cart-item-right">
                       <span className="cart-item-price">{money(item.price)}</span>

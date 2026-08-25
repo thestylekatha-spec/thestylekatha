@@ -127,15 +127,17 @@
 /* Actions */
 .pd-actions{display:flex;flex-wrap:wrap;gap:12px;}
 .pd-btn{
+  display:inline-flex;align-items:center;justify-content:center;
   border:0;cursor:pointer;font-family:inherit;font-size:13px;
   letter-spacing:1.6px;text-transform:uppercase;padding:16px 32px;
-  border-radius:6px;transition:all .2s;font-weight:500;
+  border-radius:6px;transition:all .25s;font-weight:500;
+  text-decoration:none;text-align:center;
 }
 .pd-btn-gold{background:#13110d;color:#f4e2b8;}
-.pd-btn-gold:hover{background:#2a2419;transform:translateY(-2px);}
+.pd-btn-gold:hover{background:#2a2419;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.2);}
 .pd-btn-gold:disabled{opacity:.45;cursor:not-allowed;transform:none;}
-.pd-btn-outline{background:#fff;color:#1a1a1a;border:1px solid #1a1a1a;}
-.pd-btn-outline:hover{background:#13110d;color:#f4e2b8;}
+.pd-btn-outline{background:#fff;color:#13110d;border:2px solid #13110d;}
+.pd-btn-outline:hover{background:#13110d;color:#f4e2b8;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.15);}
 
 /* Meta */
 .pd-meta{

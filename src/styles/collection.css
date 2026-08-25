@@ -27,15 +27,15 @@
   align-items:center;
   justify-content:space-between;
   gap:16px;
-  padding:14px 24px;
+  padding:18px 32px;
 }
-.cl-page .logo{display:flex;align-items:center;gap:12px;}
-.cl-page .logo-mark{height:55px;width:auto;}
-.cl-page .logo-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;}
-.cl-page .logo-the{font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:4px;}
-.cl-page .logo-brand{font-family:'Cormorant Garamond',serif;font-size:20px;color:#fff;letter-spacing:1px;}
+.cl-page .logo{display:flex;align-items:center;}
+.cl-page .logo-mark{height:65px;width:auto;}
+.cl-page .logo-text{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;}
+.cl-page .logo-the{font-family:'Cormorant Garamond',serif;font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:6px;}
+.cl-page .logo-brand{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;letter-spacing:1.5px;}
 .cl-page .logo-brand em{color:#e6cd97;font-style:normal;}
-.cl-page .logo-sub{font-size:5px;color:rgba(255,255,255,0.45);letter-spacing:0.7px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.cl-page .logo-sub{font-family:'Jost',sans-serif;font-size:6.5px;color:rgba(255,255,255,0.55);letter-spacing:0.9px;text-transform:uppercase;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 
 .cl-nav-link{font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:#f5efe2;transition:color .2s;}
 .cl-nav-link:hover{color:#e6cd97;}

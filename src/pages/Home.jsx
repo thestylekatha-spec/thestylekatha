@@ -597,22 +597,24 @@ export default function Home() {
                 <span className="logo-sub">JEWELLERY · CLOTHING · TIMELESS STYLE</span>
               </div>
             </div>
-            <div>
-              <h4>Collection</h4>
-              <ul className="footer-collections">
-                {categories.length
-                  ? categories.map(c => (
-                    <li key={c.id}><a href={`/collection?slug=${c.slug || c.id}`}>{c.name}</a></li>
-                  ))
-                  : <li><span style={{color:'#999',fontSize:13}}>Loading\u2026</span></li>
-                }
-              </ul>
-            </div>
-            <div>
-              <h4>Follow Us</h4>
-              <ul className="footer-social">
-                <li><a href="https://www.instagram.com/thestylekatha" target="_blank" rel="noopener">Instagram</a></li>
-              </ul>
+            <div className="footer-links">
+              <div>
+                <h4>Collection</h4>
+                <ul className="footer-collections">
+                  {categories.length
+                    ? categories.map(c => (
+                      <li key={c.id}><a href={`/collection?slug=${c.slug || c.id}`}>{c.name}</a></li>
+                    ))
+                    : <li><span style={{color:'#999',fontSize:13}}>Loading\u2026</span></li>
+                  }
+                </ul>
+              </div>
+              <div>
+                <h4>Follow Us</h4>
+                <ul className="footer-social">
+                  <li><a href="https://www.instagram.com/thestylekatha" target="_blank" rel="noopener">Instagram</a></li>
+                </ul>
+              </div>
             </div>
           </div>
           <div className="footer-bottom">

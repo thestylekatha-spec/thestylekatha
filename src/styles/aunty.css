@@ -158,13 +158,17 @@
 .ak .testimonial-grid::-webkit-scrollbar{display:none;}
 .ak .t-card{
   border:1px solid var(--border);
-  border-radius:10px;
+  border-radius:8px;
   padding:20px;
   text-align:left;
   min-width:calc(50% - 10px);
   flex:0 0 calc(50% - 10px);
   scroll-snap-align:start;
-  background:#fff;
+  transition:transform .2s,box-shadow .2s;
+}
+a.t-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.1);
 }
 .ak .t-head{
   display:flex;

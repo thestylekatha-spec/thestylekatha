@@ -177,11 +177,11 @@ a.t-card:hover{
   margin-bottom:12px;
 }
 .ak .t-avatar{
-  width:44px;
-  height:44px;
-  border-radius:50%;
+  width:48px;
+  height:48px;
+  border-radius:6px;
   object-fit:cover;
-  background:#eee;
+  background:#f5f0e8;
   flex-shrink:0;
 }
 .ak .t-who{
@@ -215,13 +215,6 @@ a.t-card:hover{
   font-weight:500;
   border-top:1px solid var(--border);
   padding-top:10px;
-}
-.ak .t-review-img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-  border-radius:6px;
-  margin-top:12px;
 }
 .ak .testimonial-dots{
   display:flex;

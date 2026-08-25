@@ -191,6 +191,8 @@ a.t-card:hover{
 }
 .ak .t-body{
   padding:16px 20px 20px;
+  background:var(--cream);
+  color:#2b2320;
 }
 .ak .t-head{
   display:flex;

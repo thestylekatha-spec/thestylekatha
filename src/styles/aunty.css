@@ -134,8 +134,9 @@
   text-align:center;
 }
 .ak .testimonials h2{
-  font-family:Georgia,serif;
-  font-size:28px;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(24px,4vw,32px);
+  font-weight:600;
   margin-bottom:6px;
 }
 .ak .testimonials .sub{
@@ -157,43 +158,59 @@
 .ak .testimonial-grid::-webkit-scrollbar{display:none;}
 .ak .t-card{
   border:1px solid var(--border);
-  border-radius:8px;
+  border-radius:10px;
   padding:20px;
   text-align:left;
   min-width:calc(50% - 10px);
   flex:0 0 calc(50% - 10px);
   scroll-snap-align:start;
+  background:#fff;
 }
-.ak .t-card img{
-  width:48px;
-  height:48px;
-  aspect-ratio:1/1;
-  object-fit:cover;
+.ak .t-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+.ak .t-avatar{
+  width:44px;
+  height:44px;
   border-radius:50%;
-  margin-bottom:14px;
+  object-fit:cover;
   background:#eee;
+  flex-shrink:0;
 }
-.ak .t-card .quote{
-  font-size:16px;
-  color:var(--text);
-  margin-bottom:14px;
-  line-height:1.5;
-  font-style:italic;
-}
-.ak .t-card .who{
-  font-size:15px;
+.ak .t-who{
+  font-size:14px;
   font-weight:700;
+  color:var(--text);
 }
-.ak .t-card .who span{
+.ak .t-verified{
   font-weight:400;
-  color:var(--muted);
-  font-style:italic;
-  font-size:13px;
+  color:#1d7a4c;
+  font-size:11px;
+  font-style:normal;
+  margin-left:6px;
 }
-.ak .t-card .price{
+.ak .t-stars{
+  color:#c9a35c;
   font-size:13px;
+  letter-spacing:1px;
+  margin-top:2px;
+}
+.ak .t-quote{
+  font-size:14px;
+  color:var(--text);
+  margin-bottom:12px;
+  line-height:1.6;
+  font-style:italic;
+}
+.ak .t-product{
+  font-size:12px;
   color:var(--muted);
-  margin-top:10px;
+  font-weight:500;
+  border-top:1px solid var(--border);
+  padding-top:10px;
 }
 .ak .testimonial-dots{
   display:flex;

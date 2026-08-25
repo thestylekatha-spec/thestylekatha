@@ -83,10 +83,11 @@
   .ak .testimonials h2 { font-size: 22px; }
   .ak .testimonial-grid { gap: 12px; }
   .ak .t-card { min-width: calc(50% - 6px); flex: 0 0 calc(50% - 6px); padding: 14px; }
-  .ak .t-card img { width: 40px; height: 40px; }
-  .ak .t-card .quote { font-size: 14px; }
-  .ak .t-card .who { font-size: 13px; }
-  .ak .t-card .price { font-size: 11px; }
+  .ak .t-avatar { width: 38px; height: 38px; }
+  .ak .t-who { font-size: 13px; }
+  .ak .t-stars { font-size: 12px; }
+  .ak .t-quote { font-size: 13px; }
+  .ak .t-product { font-size: 11px; }
 
   /* Instagram */
   .ak .instagram { padding: 36px 16px; }
@@ -121,8 +122,8 @@
   .collection-item .label { font-size: 11px; }
   .ak .testimonial-grid { gap: 10px; }
   .ak .t-card { min-width: calc(50% - 5px); flex: 0 0 calc(50% - 5px); padding: 12px; }
-  .ak .t-card img { width: 36px; height: 36px; }
-  .ak .t-card .quote { font-size: 13px; }
+  .ak .t-avatar { width: 34px; height: 34px; }
+  .ak .t-quote { font-size: 12px; }
 }
 
 /* --- Very small: 360px --- */

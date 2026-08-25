@@ -128,10 +128,10 @@ export default function Home() {
   const RING_ALTS = ['1gm gold ring', '1gm gold band ring', '1gm gold statement ring'];
 
   const TESTIMONIALS = [
-    { img: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=300&h=300&fit=crop', quote: '"Looks super elegant and classy with my Indian saree, loved the pieces very much."', who: 'Ria', price: 'Emerald Luxe AD-Style Necklace Set \u2014 Rs. 1,499.00' },
-    { img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=300&fit=crop', quote: '"This Victorian style necklace looked very pretty and added a touch of class to my outfit."', who: 'Sanya', price: 'Pastel Charm Designer Necklace Set \u2014 Rs. 3,299.00' },
-    { img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=300&h=300&fit=crop', quote: '"Bought this as a gift for my girlfriend, she absolutely loved it and it looked amazing on her."', who: 'Krish', price: 'Royal Ruby Kundan Jhumka Earrings \u2014 Rs. 1,599.00' },
-    { img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=300&fit=crop', quote: '"This anti-tarnish set has very good quality, and the panda charm on it looks super cute."', who: 'Kanika', price: 'Playful Panda Charm Jewellery Set \u2014 Rs. 199.00' },
+    { who: 'Ria', quote: 'Looks super elegant and classy with my Indian saree, loved the pieces very much.', product: 'Emerald Luxe AD-Style Necklace Set', price: 1499, img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=300&fit=crop' },
+    { who: 'Sanya', quote: 'This Victorian style necklace looked very pretty and added a touch of class to my outfit.', product: 'Pastel Charm Designer Necklace Set', price: 3299, img: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=300&h=300&fit=crop' },
+    { who: 'Krish', quote: 'Bought this as a gift for my girlfriend, she absolutely loved it and it looked amazing on her.', product: 'Royal Ruby Kundan Jhumka Earrings', price: 1599, img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=300&fit=crop' },
+    { who: 'Kanika', quote: 'This anti-tarnish set has very good quality, and the panda charm on it looks super cute.', product: 'Playful Panda Charm Jewellery Set', price: 199, img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=300&h=300&fit=crop' },
   ];
 
   const STAT_CONFIG = [
@@ -518,10 +518,15 @@ export default function Home() {
           <div className="testimonial-grid reveal-stagger" ref={testimonialRef}>
             {TESTIMONIALS.map((t, i) => (
               <div className="t-card" key={i}>
-                <img src={t.img} alt={t.who} />
-                <div className="quote">{t.quote}</div>
-                <div className="who">{t.who} <span>Verified Buyer</span></div>
-                <div className="price">{t.price}</div>
+                <div className="t-head">
+                  <img className="t-avatar" src={t.img} alt={t.who} />
+                  <div>
+                    <div className="t-who">{t.who} <span className="t-verified">Verified Buyer</span></div>
+                    <div className="t-stars">★★★★★</div>
+                  </div>
+                </div>
+                <div className="t-quote">"{t.quote}"</div>
+                <div className="t-product">{t.product} — {money(t.price)}</div>
               </div>
             ))}
           </div>

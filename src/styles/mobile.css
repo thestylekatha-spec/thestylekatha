@@ -100,19 +100,6 @@
   .footer-grid .logo { justify-content: center; }
   .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
 
-  /* Cart modal */
-  .cart-modal-body { max-height: 96vh; border-radius: 12px; }
-  .cart-items { max-height: 30vh; padding: 6px 18px; }
-  .cart-head { padding: 16px 18px 14px; }
-  .cart-foot { padding: 14px 18px 18px; }
-  .cart-item { flex-wrap: wrap; gap: 8px; }
-  .cart-item-media { width: 48px; height: 48px; }
-  .cart-item-right { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
-  .cart-item-qty { order: 3; }
-
-  /* Search */
-  .search-panel { padding: 14px; }
-
   /* Quick view */
   .qv-content { width: 95vw; max-height: 90vh; }
 

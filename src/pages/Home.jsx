@@ -11,7 +11,6 @@ import '../styles/ring-showcase.css';
 import '../styles/usp.css';
 import '../styles/footer.css';
 import '../styles/animations.css';
-import '../styles/search.css';
 import '../styles/cart.css';
 import '../styles/toast.css';
 import '../styles/back-to-top.css';
@@ -106,8 +105,6 @@ export default function Home() {
   const [cartCount, setCartCount] = useState(cartStore.count());
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [quickView, setQuickView] = useState(null);
   const [toast, setToast] = useState(null);
   const [testimonialDot, setTestimonialDot] = useState(0);
@@ -173,13 +170,6 @@ export default function Home() {
     });
   }, []);
 
-  const filteredProducts = searchQuery.trim()
-    ? products.filter(p => {
-        const q = searchQuery.toLowerCase();
-        return (p.name || '').toLowerCase().includes(q) || (p.category || '').toLowerCase().includes(q);
-      })
-    : products;
-
   useEffect(() => {
     async function load() {
       try {
@@ -188,23 +178,18 @@ export default function Home() {
           supabase.from('products').select('*')
         ]);
         if (catRes.error) {
-          console.warn('Categories query error:', catRes.error.message);
           const fallback = await supabase.from('categories').select('*').order('sort_order', { ascending: true });
           if (!fallback.error && fallback.data) setCategories(fallback.data);
         } else if (catRes.data) {
           setCategories(catRes.data);
         }
         if (prodRes.error) {
-          console.warn('Products query error:', prodRes.error.message);
           setDataError('Products: ' + prodRes.error.message);
         } else if (prodRes.data && prodRes.data.length) {
           setProducts(prodRes.data);
           setDataError(null);
-        } else if (!prodRes.error) {
-          console.warn('Products table returned empty');
         }
       } catch (e) {
-        console.warn('Could not load data:', e);
         setDataError('Load error: ' + e.message);
       }
     }
@@ -309,7 +294,6 @@ export default function Home() {
     function onKeyDown(e) {
       if (e.key === 'Escape') {
         setCartOpen(false);
-        setSearchOpen(false);
         setQuickView(null);
         setSizeGuideOpen(false);
       }
@@ -341,7 +325,7 @@ export default function Home() {
   }, [categories, products]);
 
   useEffect(() => {
-    if (cartOpen || searchOpen || quickView || sizeGuideOpen) {
+    if (cartOpen || quickView || sizeGuideOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -628,7 +612,7 @@ export default function Home() {
         </footer>
       </div>
 
-      <div className="backdrop" style={{ display: (searchOpen || cartOpen || quickView || sizeGuideOpen) ? 'block' : 'none' }} onClick={() => { setSearchOpen(false); setCartOpen(false); setQuickView(null); setSizeGuideOpen(false); }} />
+      <div className="backdrop" style={{ display: (cartOpen || quickView || sizeGuideOpen) ? 'block' : 'none' }} onClick={() => { setCartOpen(false); setQuickView(null); setSizeGuideOpen(false); }} />
 
       <div className="qv-modal" style={{ display: quickView ? 'flex' : 'none' }}>
         <div className="qv-overlay" onClick={() => setQuickView(null)} />
@@ -727,28 +711,6 @@ export default function Home() {
       <button className={`back-to-top ${backToTopVisible ? 'visible' : ''}`} aria-label="Back to top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15" /></svg>
       </button>
-
-      <div className="search-panel" style={{ display: searchOpen ? 'block' : 'none' }}>
-        <div className="search-inner">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.6" y2="16.6" /></svg>
-          <input
-            type="text"
-            placeholder="Search rings, necklaces, earrings, bracelets\u2026"
-            autoComplete="off"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            autoFocus={searchOpen}
-          />
-          <button className="search-close" aria-label="Close search" onClick={() => { setSearchOpen(false); setSearchQuery(''); }}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" /></svg>
-          </button>
-        </div>
-        {searchQuery.trim() && (
-          <div className="search-status">
-            {filteredProducts.length} {filteredProducts.length === 1 ? 'piece found' : 'pieces found'}
-          </div>
-        )}
-      </div>
 
       {cartOpen && (
         <div className="cart-modal" style={{ display: 'flex' }}>

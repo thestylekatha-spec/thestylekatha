@@ -58,7 +58,7 @@ export default function Product() {
             .eq('category_id', p.category_id).neq('id', p.id).limit(8);
           setRelated(rel.data || []);
         }
-      } catch(e) { console.error(e); }
+      } catch(e) { /* ignore */ }
       setLoading(false);
     }
     load();

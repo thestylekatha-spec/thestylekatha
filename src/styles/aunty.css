@@ -330,51 +330,6 @@
 .ak .reveal-stagger .t-card:nth-child(3){transition-delay:.25s;}
 .ak .reveal-stagger .t-card:nth-child(4){transition-delay:.35s;}
 
-@media (max-width:900px){
-  .ak .product-card{width:200px;}
-  .ak .testimonial-grid{gap:16px;}
-  .ak .t-card{min-width:calc(50% - 8px);flex:0 0 calc(50% - 8px);}
-  .ak .insta-grid{gap:6px;}
-  .ak .insta-grid > *{min-width:calc(50% - 3px);flex:0 0 calc(50% - 3px);}
-  .ak .footer-grid{grid-template-columns:1fr 1fr;}
-}
-
-@media (max-width:640px){
-  .ak .product-card{width:168px;}
-  .ak .product-track{gap:12px;padding:0 14px;}
-  .ak .product-card .name{font-size:13px;line-height:1.3;}
-  .ak .product-card .price{font-size:12.5px;}
-  .ak .product-card .thumb{border-radius:6px;margin-bottom:10px;}
-  .ak .product-section{padding:10px 0 22px;}
-  .ak .ak-hero{padding:26px 16px 10px;}
-  .ak .ak-hero h1{font-size:25px !important;letter-spacing:1.2px;}
-  .ak .ak-hero .shop-now{font-size:13px;padding:6px 2px;}
-  .ak .testimonials{padding:36px 16px;}
-  .ak .testimonials h2{font-size:22px;}
-  .ak .testimonial-grid{gap:12px;}
-  .ak .t-card{min-width:calc(50% - 6px);flex:0 0 calc(50% - 6px);padding:14px;}
-  .ak .t-card img{width:40px;height:40px;}
-  .ak .t-card .quote{font-size:14px;}
-  .ak .t-card .who{font-size:13px;}
-  .ak .t-card .price{font-size:11px;}
-  .ak .instagram{padding:36px 16px;}
-  .ak .instagram h2{font-size:20px;}
-  .ak .insta-grid{gap:4px;}
-  .ak .insta-grid > *{min-width:calc(50% - 2px);flex:0 0 calc(50% - 2px);}
-  .ak .footer-grid{grid-template-columns:1fr;gap:34px;text-align:center;}
-  .ak .footer-grid .logo{justify-content:center;}
-  .collections-track{gap:16px 12px;padding:0 16px;max-width:100%;}
-}
-
-@media (max-width:400px){
-  .collections-track{grid-template-columns:repeat(3,1fr);gap:12px 10px;padding:0 12px;}
-  .collection-item .label{font-size:11px;}
-  .ak .testimonial-grid{gap:10px;}
-  .ak .t-card{min-width:calc(50% - 5px);flex:0 0 calc(50% - 5px);padding:12px;}
-  .ak .t-card img{width:36px;height:36px;}
-  .ak .t-card .quote{font-size:13px;}
-}
-
 @media (prefers-reduced-motion:reduce){
   .ak .reveal, .ak .reveal.visible, .ak .reveal-stagger .t-card, .ak .reveal-stagger.visible .t-card{
     opacity:1 !important;

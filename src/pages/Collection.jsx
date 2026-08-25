@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { money, generateOrderId } from '../lib/utils';
+import { money } from '../lib/utils';
 import { cartStore } from '../lib/cartStore';
 import '../styles/base.css';
 import '../styles/nav.css';
@@ -33,7 +33,6 @@ export default function Collection() {
       try {
         const q = supabase.from('categories').select('id, name, slug, description');
         const catRes = slug ? await q.eq('slug', slug).limit(1) : await q.eq('id', catId).limit(1);
-        if (catRes.error) console.warn('Category query error:', catRes.error.message);
         const cat = (catRes.data || [])[0];
         if (cat) {
           setCategory(cat);
@@ -41,7 +40,6 @@ export default function Collection() {
           let pr = await supabase.from('products')
             .select('id, name, price, old_price, badge, image_url, is_active, category_id')
             .eq('category_id', cat.id).order('created_at', { ascending: true });
-          if (pr.error) console.warn('Products query error:', pr.error.message);
           let list = pr.data || [];
           if (!list.length) {
             const alt = await supabase.from('products')
@@ -51,7 +49,7 @@ export default function Collection() {
           }
           setProducts(list);
         }
-      } catch(e) { console.error(e); }
+      } catch(e) { /* ignore */ }
       setLoading(false);
     }
     load();

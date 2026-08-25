@@ -531,6 +531,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="t-quote">"{t.quote}"</div>
+                <div className="t-product">{t.product}</div>
               </a>
             ))}
           </div>

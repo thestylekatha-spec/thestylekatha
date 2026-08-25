@@ -149,14 +149,17 @@
   gap:20px;
   max-width:1400px;
   margin:0 auto;
-  overflow-x:auto;
+  overflow-x:scroll;
+  overflow-y:hidden;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
   padding-bottom:8px;
   touch-action:pan-x;
+  will-change:scroll-position;
 }
 .ak .testimonial-grid::-webkit-scrollbar{display:none;}
+.ak .testimonial-grid > *{flex-shrink:0;}
 .ak .t-card{
   border:1px solid var(--border);
   border-radius:8px;
@@ -259,13 +262,16 @@ a.t-card:hover{
   gap:8px;
   max-width:720px;
   margin:0 auto;
-  overflow-x:auto;
+  overflow-x:scroll;
+  overflow-y:hidden;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
   padding-bottom:8px;
   touch-action:pan-x;
+  will-change:scroll-position;
 }
+.ak .insta-grid > *{flex-shrink:0;}
 .ak .insta-grid::-webkit-scrollbar{display:none;}
 .ak .insta-grid > * {
   min-width:calc(50% - 4px);

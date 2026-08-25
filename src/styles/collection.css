@@ -35,7 +35,7 @@
 .cl-page .logo-the{font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:4px;}
 .cl-page .logo-brand{font-family:'Cormorant Garamond',serif;font-size:20px;color:#fff;letter-spacing:1px;}
 .cl-page .logo-brand em{color:#e6cd97;font-style:normal;}
-.cl-page .logo-sub{font-size:6px;color:rgba(255,255,255,0.45);letter-spacing:1px;text-transform:uppercase;}
+.cl-page .logo-sub{font-size:5px;color:rgba(255,255,255,0.45);letter-spacing:0.7px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 
 .cl-nav-link{font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:#f5efe2;transition:color .2s;}
 .cl-nav-link:hover{color:#e6cd97;}

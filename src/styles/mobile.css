@@ -102,13 +102,13 @@
   .footer-grid { flex-direction: column; flex-wrap: nowrap; align-items: center; gap: 30px; text-align: center; }
   .footer-grid > div { min-width: 0; width: auto; }
   .footer-grid .logo { justify-content: center; margin-bottom: 0; }
-  .footer-logo { flex-direction: column; align-items: center; }
+  .footer-logo { flex-direction: column; align-items: center; justify-content: center; }
   .footer-logo .logo-mark { height: 50px; width: auto; }
   .footer-logo .logo-brand { font-size: 20px; }
   .footer-logo .logo-the { font-size: 12px; letter-spacing: 4px; }
   .footer-logo .logo-sub { font-size: 7px; letter-spacing: 0.8px; white-space: nowrap; }
   .footer-grid h4 { font-size: 12px; margin-bottom: 12px; letter-spacing: 0.12em; }
-  .footer-grid ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .footer-grid ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 16px; justify-items: center; }
   .footer-grid li { }
   .footer-grid a { font-size: 13px; margin-bottom: 0; }
   .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }

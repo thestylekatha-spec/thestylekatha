@@ -190,7 +190,7 @@ a.t-card:hover{
   background:#f5f0e8;
 }
 .ak .t-body{
-  padding:16px 20px 20px;
+  padding:18px 22px 22px;
   background:var(--cream);
   color:#2b2320;
 }
@@ -209,36 +209,39 @@ a.t-card:hover{
   flex-shrink:0;
 }
 .ak .t-who{
-  font-size:14px;
+  font-size:16px;
   font-weight:700;
   color:var(--text);
 }
 .ak .t-verified{
   font-weight:400;
   color:#1d7a4c;
-  font-size:11px;
+  font-size:12px;
   font-style:normal;
   margin-left:6px;
 }
 .ak .t-stars{
   color:#c9a35c;
-  font-size:13px;
+  font-size:16px;
   letter-spacing:1px;
   margin-top:2px;
 }
 .ak .t-quote{
-  font-size:14px;
+  font-size:18px;
   color:var(--text);
-  margin-bottom:12px;
-  line-height:1.6;
+  margin-bottom:14px;
+  line-height:1.5;
   font-style:italic;
 }
+@media (min-width:768px){
+  .ak .t-quote{font-size:22px;}
+}
 .ak .t-product{
-  font-size:12px;
+  font-size:14px;
   color:var(--muted);
   font-weight:500;
   border-top:1px solid var(--border);
-  padding-top:10px;
+  padding-top:12px;
 }
 .ak .testimonial-dots{
   display:flex;

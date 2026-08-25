@@ -84,10 +84,11 @@
   .ak .testimonial-grid { gap: 12px; }
   .ak .t-card { min-width: calc(50% - 6px); flex: 0 0 calc(50% - 6px); }
   .ak .t-review-img { height: 160px; }
-  .ak .t-body { padding: 12px 14px 16px; }
-  .ak .t-who { font-size: 13px; }
-  .ak .t-stars { font-size: 12px; }
-  .ak .t-quote { font-size: 13px; }
+  .ak .t-body { padding: 14px 16px 18px; }
+  .ak .t-who { font-size: 15px; }
+  .ak .t-stars { font-size: 14px; }
+  .ak .t-quote { font-size: 15px; }
+  .ak .t-product { font-size: 13px; }
   .ak .t-product { font-size: 11px; }
 
   /* Instagram */
@@ -124,8 +125,9 @@
   .ak .testimonial-grid { gap: 10px; }
   .ak .t-card { min-width: calc(50% - 5px); flex: 0 0 calc(50% - 5px); }
   .ak .t-review-img { height: 130px; }
-  .ak .t-body { padding: 10px 12px 14px; }
-  .ak .t-quote { font-size: 12px; }
+  .ak .t-body { padding: 12px 14px 16px; }
+  .ak .t-quote { font-size: 14px; }
+  .ak .t-product { font-size: 12px; }
 }
 
 /* --- Very small: 360px --- */

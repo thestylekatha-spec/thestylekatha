@@ -394,9 +394,9 @@ export default function Home() {
       </header>
 
       <section className="hero">
-        <span className="eyebrow hero-in">The Style Katha \u2014 1gm Gold Collection</span>
+        <span className="eyebrow hero-in">The Style Katha — 1gm Gold Collection</span>
         <h1 className="hero-in">Style, that shines<br /><b>without the weight.</b></h1>
-        <p className="sub hero-in">1gm gold look, everyday price \u2014 each piece crafted with care and finished by hand, so you can wear style every day, not just on occasions.</p>
+        <p className="sub hero-in">1gm gold look, everyday price — each piece crafted with care and finished by hand, so you can wear style every day, not just on occasions.</p>
         <div className="hero-ctas hero-in">
           <a href="#featuredCategories" className="btn btn-gold">Explore the Collection</a>
           <a href="#usp" className="btn btn-outline" onClick={e => { e.preventDefault(); document.querySelector('.usp')?.scrollIntoView({ behavior: 'smooth' }); }}>Our Craft</a>
@@ -488,7 +488,7 @@ export default function Home() {
           <div className="usp-item reveal">
             <div className="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="7" width="13" height="10" rx="1" /><path d="M15 10h4l3 3v4h-7z" /><circle cx="7" cy="19" r="1.6" /><circle cx="18" cy="19" r="1.6" /></svg></div>
             <h3>Pan-India Shipping</h3>
-            <p>Safe, tracked delivery to every corner of India \u2014 right to your doorstep.</p>
+            <p>Safe, tracked delivery to every corner of India — right to your doorstep.</p>
           </div>
           <div className="usp-item reveal">
             <div className="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" /><path d="M9 12l2 2 4-4" /></svg></div>
@@ -612,7 +612,7 @@ export default function Home() {
             </div>
           </div>
           <div className="footer-bottom">
-            ALL COPYRIGHTS ARE RESERVED \u00a9 thestylekatha 2026
+            ALL COPYRIGHTS ARE RESERVED © thestylekatha 2026
           </div>
         </footer>
       </div>
@@ -680,8 +680,8 @@ export default function Home() {
               <thead><tr><th>India</th><th>US/Canada</th><th>UK/Australia</th><th>Inner Diameter (mm)</th></tr></thead>
               <tbody>
                 <tr><td>1</td><td>1.5</td><td>H</td><td>13.5</td></tr>
-                <tr><td>2</td><td>2.5</td><td>I\u00bd</td><td>14.5</td></tr>
-                <tr><td>3</td><td>3.5</td><td>J\u00bd</td><td>15.0</td></tr>
+                <tr><td>2</td><td>2.5</td><td>I½</td><td>14.5</td></tr>
+                <tr><td>3</td><td>3.5</td><td>J½</td><td>15.0</td></tr>
                 <tr><td>4</td><td>4.5</td><td>L</td><td>15.7</td></tr>
                 <tr><td>5</td><td>5.5</td><td>M</td><td>16.5</td></tr>
                 <tr><td>6</td><td>6.5</td><td>N</td><td>17.3</td></tr>
@@ -704,7 +704,7 @@ export default function Home() {
             <div className="toast-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg></div>
             <div className="toast-body">
               <div className="toast-title">Added to Bag</div>
-              <div className="toast-msg">{toast.name} \u2014 {toast.price}</div>
+              <div className="toast-msg">{toast.name} — {toast.price}</div>
             </div>
             <button className="toast-close" aria-label="Dismiss" onClick={() => setToast(null)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" /></svg>

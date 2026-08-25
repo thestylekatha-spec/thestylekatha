@@ -185,7 +185,7 @@ export default function Home() {
       try {
         const [catRes, prodRes] = await Promise.all([
           supabase.from('categories').select('*').eq('is_active', true).order('sort_order', { ascending: true }),
-          supabase.from('products').select('id, name, price, old_price, badge, badge_alt, image_url, is_active, in_stock, category, category_id, description, features, slug, customisable, size_guide_title, size_guide, care, shipping, sku')
+          supabase.from('products').select('*')
         ]);
         if (catRes.error) {
           console.warn('Categories query error:', catRes.error.message);

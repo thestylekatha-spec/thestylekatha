@@ -590,7 +590,7 @@ export default function Home() {
         <footer>
           <div className="footer-grid">
             <div>
-              <div className="logo footer-logo" style={{ marginBottom: 14 }}>
+              <div className="logo footer-logo">
                 <img src="/assets/logo.png" alt="The Style Katha" className="logo-mark" />
                 <div className="logo-text">
                   <span className="logo-the">THE</span>

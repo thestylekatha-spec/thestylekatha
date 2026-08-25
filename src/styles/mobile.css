@@ -99,15 +99,17 @@
 
   /* Footer */
   footer { padding: 36px 16px 20px; }
-  .footer-grid { gap: 28px; text-align: center; flex-direction: column; align-items: center; }
-  .footer-grid > div { min-width: auto; width: 100%; }
+  .footer-grid { flex-direction: column; flex-wrap: nowrap; align-items: center; gap: 28px; text-align: center; }
+  .footer-grid > div { min-width: 0; width: 100%; }
   .footer-grid .logo { justify-content: center; margin-bottom: 8px; }
-  .footer-logo .logo-mark { height: 50px; }
+  .footer-logo { flex-direction: column; align-items: center; }
+  .footer-logo .logo-mark { height: 50px; width: auto; }
   .footer-logo .logo-brand { font-size: 20px; }
   .footer-logo .logo-the { font-size: 12px; letter-spacing: 4px; }
-  .footer-logo .logo-sub { font-size: 7px; letter-spacing: 0.8px; }
+  .footer-logo .logo-sub { font-size: 7px; letter-spacing: 0.8px; white-space: nowrap; }
   .footer-grid p { font-size: 12px; max-width: 100%; }
   .footer-grid h4 { font-size: 12px; margin-bottom: 10px; }
+  .footer-grid ul { list-style: none; padding: 0; margin: 0; }
   .footer-grid a { font-size: 13px; margin-bottom: 8px; }
   .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
 

@@ -79,15 +79,16 @@
   .stat .num { font-size: 36px; }
 
   /* Testimonials */
-  .ak .testimonials { padding: 36px 16px; }
-  .ak .testimonials h2 { font-size: 22px; }
-  .ak .testimonial-grid { gap: 12px; }
-  .ak .t-card { min-width: calc(50% - 6px); flex: 0 0 calc(50% - 6px); }
-  .ak .t-review-img { height: 160px; }
-  .ak .t-body { padding: 14px 16px 18px; }
-  .ak .t-who { font-size: 15px; }
-  .ak .t-stars { font-size: 14px; }
-  .ak .t-quote { font-size: 15px; }
+  .ak .testimonials { padding: 40px 16px; }
+  .ak .testimonials h2 { font-size: 28px; }
+  .ak .testimonials .sub { font-size: 14px; margin-bottom: 28px; }
+  .ak .testimonial-grid { gap: 14px; }
+  .ak .t-card { min-width: calc(65% - 7px); flex: 0 0 calc(65% - 7px); }
+  .ak .t-review-img { height: 200px; }
+  .ak .t-body { padding: 16px 18px 20px; }
+  .ak .t-who { font-size: 16px; }
+  .ak .t-stars { font-size: 15px; }
+  .ak .t-quote { font-size: 16px; }
   .ak .t-product { font-size: 13px; }
   .ak .t-product { font-size: 11px; }
 
@@ -123,10 +124,10 @@
   .collections-track { grid-template-columns: repeat(3, 1fr); gap: 12px 10px; padding: 0 12px; }
   .collection-item .label { font-size: 11px; }
   .ak .testimonial-grid { gap: 10px; }
-  .ak .t-card { min-width: calc(50% - 5px); flex: 0 0 calc(50% - 5px); }
-  .ak .t-review-img { height: 130px; }
-  .ak .t-body { padding: 12px 14px 16px; }
-  .ak .t-quote { font-size: 14px; }
+  .ak .t-card { min-width: calc(70% - 5px); flex: 0 0 calc(70% - 5px); }
+  .ak .t-review-img { height: 160px; }
+  .ak .t-body { padding: 14px 14px 16px; }
+  .ak .t-quote { font-size: 15px; }
   .ak .t-product { font-size: 12px; }
 }
 

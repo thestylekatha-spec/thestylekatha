@@ -68,4 +68,4 @@ footer {
 .footer-logo .logo-mark { height: 56px; }
 .footer-logo .logo-brand { font-size: 22px; }
 .footer-logo .logo-the { letter-spacing: 5px; }
-.footer-logo .logo-sub { font-size: 6.5px; letter-spacing: 0.9px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }
+.footer-logo .logo-sub { font-size: 8px; letter-spacing: 1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }

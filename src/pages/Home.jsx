@@ -755,12 +755,12 @@ export default function Home() {
           <div className="cart-modal-overlay" onClick={() => setCartOpen(false)} />
           <div className="cart-modal-body">
             <div className="cart-head">
-              <h2>Your Bag</h2>
+              <h2>Your Bag{cartItems.length > 0 && <span className="cart-count-label">({cartItems.reduce((s, i) => s + i.qty, 0)} items)</span>}</h2>
               <button className="cart-close" onClick={() => setCartOpen(false)}>&times;</button>
             </div>
             <div className="cart-items">
               {cartItems.length === 0
-                ? <div className="cart-empty">Your bag is empty.</div>
+                ? <div className="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><br/>Your bag is empty.</div>
                 : cartItems.map((item, idx) => (
                   <div className="cart-item" key={idx}>
                     <div className="cart-item-media"><img src={item.image} alt={item.name} /></div>

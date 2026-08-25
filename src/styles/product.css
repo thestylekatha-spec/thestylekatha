@@ -34,7 +34,7 @@
 .pd-page .logo-the{font-family:'Cormorant Garamond',serif;font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:6px;}
 .pd-page .logo-brand{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;letter-spacing:1.5px;}
 .pd-page .logo-brand em{color:#e6cd97;font-style:normal;}
-.pd-page .logo-sub{font-family:'Jost',sans-serif;font-size:6.5px;color:rgba(255,255,255,0.55);letter-spacing:0.9px;text-transform:uppercase;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.pd-page .logo-sub{font-family:'Jost',sans-serif;font-size:8px;color:rgba(255,255,255,0.55);letter-spacing:1px;text-transform:uppercase;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 
 .pd-page .nav-icons{display:flex;align-items:center;gap:18px;}
 .cl-nav-link{font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:#f5efe2;transition:color .2s;}

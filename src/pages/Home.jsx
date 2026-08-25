@@ -330,7 +330,7 @@ export default function Home() {
     } else {
       document.body.style.overflow = '';
     }
-  }, [cartOpen, searchOpen, quickView, sizeGuideOpen]);
+  }, [cartOpen, quickView, sizeGuideOpen]);
 
   useEffect(() => {
     if (sessionStorage.getItem('openCart')) {
